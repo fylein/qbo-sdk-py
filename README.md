@@ -1,2 +1,48 @@
-# qbo-sdk-py
-A Python SDK for Quickbooks Online
+# QuickbooksOnlineSDK
+
+Python SDK for accessing QBO APIs.
+
+## Installation
+
+This project requires [Python 3+](https://www.python.org/downloads/) and [Requests](https://pypi.org/project/requests/) library (pip install requests).
+
+1. Download this project and use it (copy it in your project, etc).
+2. Install it from [pip](https://pypi.org).
+        
+        $ pip install qbosdk
+
+## Usage
+
+To use this SDK you'll need these QBO credentials used for OAuth2 authentication: **client ID**, **client secret** and **refresh token**.
+
+This SDK is very easy to use.
+1. First you'll need to create a connection using the main class QuickbooksOnlineSDK.
+```python
+from qbosdk import QuickbooksOnlineSDK
+
+connection = QuickbooksOnlineSDK(
+    client_id='<YOUR CLIENT ID>',
+    client_secret='<YOUR CLIENT SECRET>',
+    refresh_token='<YOUR REFRESH TOKEN>',
+    realm_id='<REALM / COMPANY ID>',
+    environment='<sandbox / production>'
+)
+```
+2. After that you'll be able to access any of the API classes
+```python
+"""
+USAGE: <QuickbooksOnlineSDK INSTANCE>.<API_NAME>.<API_METHOD>(<PARAMETERS>)
+"""
+
+# Get a list of all Employees (with all available details for Employee)
+response = connection.employees.get()
+
+# Get a list of all Accounts
+response = connection.accounts.get()
+```
+
+See more details about the usage into the wiki pages of this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
