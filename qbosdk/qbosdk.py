@@ -42,12 +42,12 @@ class QuickbooksOnlineSDK:
 
         self.__access_token = None
 
-        self.Accounts = Accounts()
-        self.Departments = Departments()
-        self.Classes = Classes()
-        self.Employees = Employees()
-        self.Preferences = Preferences()
-        self.ExchangeRates = ExchangeRates()
+        self.accounts = Accounts()
+        self.departments = Departments()
+        self.classes = Classes()
+        self.employees = Employees()
+        self.preferences = Preferences()
+        self.exchangeRates = ExchangeRates()
 
         self.update_server_url()
         self.update_access_token()
@@ -55,12 +55,12 @@ class QuickbooksOnlineSDK:
     def update_server_url(self):
         base_url = self.__base_url
 
-        self.Accounts.set_server_url(base_url)
-        self.Departments.set_server_url(base_url)
-        self.Classes.set_server_url(base_url)
-        self.Employees.set_server_url(base_url)
-        self.Preferences.set_server_url(base_url)
-        self.ExchangeRates.set_server_url(base_url)
+        self.accounts.set_server_url(base_url)
+        self.departments.set_server_url(base_url)
+        self.classes.set_server_url(base_url)
+        self.employees.set_server_url(base_url)
+        self.preferences.set_server_url(base_url)
+        self.exchangeRates.set_server_url(base_url)
 
     def update_access_token(self):
         """
@@ -69,12 +69,12 @@ class QuickbooksOnlineSDK:
         self.__get_access_token()
         access_token = self.__access_token
 
-        self.Accounts.change_access_token(access_token)
-        self.Departments.change_access_token(access_token)
-        self.Classes.change_access_token(access_token)
-        self.Employees.change_access_token(access_token)
-        self.Preferences.change_access_token(access_token)
-        self.ExchangeRates.change_access_token(access_token)
+        self.accounts.change_access_token(access_token)
+        self.departments.change_access_token(access_token)
+        self.classes.change_access_token(access_token)
+        self.employees.change_access_token(access_token)
+        self.preferences.change_access_token(access_token)
+        self.exchangeRates.change_access_token(access_token)
 
     def __get_access_token(self):
         """Get the access token using a HTTP post.
