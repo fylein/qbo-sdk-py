@@ -4,6 +4,7 @@ from .classes import Classes
 from .employees import Employees
 from .preferences import Preferences
 from .exchange_rates import ExchangeRates
+from .purchases import Purchases
 
 
 __all_ = [
@@ -12,5 +13,6 @@ __all_ = [
     'Classes',
     'Employees',
     'Preferences',
-    'ExchangeRates'
+    'ExchangeRates',
+    'Purchases'
 ]
