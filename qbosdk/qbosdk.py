@@ -107,6 +107,9 @@ class QuickbooksOnlineSDK:
             self.__access_token = auth['access_token']
             self.refresh_token = auth['refresh_token']
 
+        elif response.status_code == 400:
+            raise WrongParamsError('Somthing wrong with the request body', response.text)
+
         elif response.status_code == 401:
             raise UnauthorizedClientError('Wrong client secret or/and refresh token', response.text)
 
