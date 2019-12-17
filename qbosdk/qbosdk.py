@@ -46,6 +46,7 @@ class QuickbooksOnlineSDK:
         self.Departments = Departments()
         self.Classes = Classes()
         self.Employees = Employees()
+        self.Preferences = Preferences()
 
         self.update_server_url()
         self.update_access_token()
@@ -53,10 +54,11 @@ class QuickbooksOnlineSDK:
     def update_server_url(self):
         base_url = self.__base_url
 
-        self.Accounts.set_server_url(server_url=base_url)
-        self.Departments.set_server_url(server_url=base_url)
-        self.Classes.set_server_url(server_url=base_url)
-        self.Employees.set_server_url(server_url=base_url)
+        self.Accounts.set_server_url(base_url)
+        self.Departments.set_server_url(base_url)
+        self.Classes.set_server_url(base_url)
+        self.Employees.set_server_url(base_url)
+        self.Preferences.set_server_url(base_url)
 
     def update_access_token(self):
         """
@@ -69,6 +71,7 @@ class QuickbooksOnlineSDK:
         self.Departments.change_access_token(access_token)
         self.Classes.change_access_token(access_token)
         self.Employees.change_access_token(access_token)
+        self.Preferences.change_access_token(access_token)
 
     def __get_access_token(self):
         """Get the access token using a HTTP post.

@@ -82,7 +82,7 @@ class ApiBase:
         else:
             raise QuickbookOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
 
-    def _get_request(self, object_type: str, api_url: str) -> List[Dict]:
+    def _get_request(self, object_type: str, api_url: str) -> List[Dict] or Dict:
         """Create a HTTP GET request.
 
         Parameters:
@@ -104,7 +104,7 @@ class ApiBase:
 
         if response.status_code == 200:
             result = json.loads(response.text)
-            return result['QueryResponse'][object_type]
+            return result[object_type]
 
         elif response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
