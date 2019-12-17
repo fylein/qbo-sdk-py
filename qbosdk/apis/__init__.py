@@ -5,6 +5,8 @@ from .employees import Employees
 from .preferences import Preferences
 from .exchange_rates import ExchangeRates
 from .purchases import Purchases
+from .journal_entries import JournalEntries
+from .attachments import Attachments
 
 
 __all_ = [
@@ -14,5 +16,7 @@ __all_ = [
     'Employees',
     'Preferences',
     'ExchangeRates',
-    'Purchases'
+    'Purchases',
+    'JournalEntries',
+    'Attachments'
 ]

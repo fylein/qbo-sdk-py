@@ -170,3 +170,52 @@ class ApiBase:
 
         else:
             raise QuickbookOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
+
+    def _post_file(self, data, api_url):
+        """Create a HTTP post request.
+
+        Parameters:
+            data (str): HTTP POST body data for the wanted API.
+            api_url (str): Url for the wanted API.
+
+        Returns:
+            A response from the request (dict).
+        """
+
+        api_headers = {
+            'Content-Type': 'multipart/form-data; boundary={0}'.format('YOjcLaTlykb6OxfYJx4O07j1MweeMFem'),
+            'Accept': 'application/json',
+            'Connection': 'close',
+            'Authorization': 'Bearer {0}'.format(self.__access_token)
+        }
+
+        response = requests.post(
+            '{0}{1}'.format(self.__server_url, api_url),
+            headers=api_headers,
+            data=data
+        )
+
+        if response.status_code == 200:
+            result = json.loads(response.text)
+            return result
+
+        elif response.status_code == 400:
+            raise WrongParamsError('Some of the parameters are wrong', response.text)
+
+        elif response.status_code == 401:
+            raise InvalidTokenError('Invalid token, try to refresh it', response.text)
+
+        elif response.status_code == 403:
+            raise NoPrivilegeError('Forbidden, the user has insufficient privilege', response.text)
+
+        elif response.status_code == 404:
+            raise NotFoundItemError('Not found item with ID', response.text)
+
+        elif response.status_code == 498:
+            raise ExpiredTokenError('Expired token, try to refresh it', response.text)
+
+        elif response.status_code == 500:
+            raise InternalServerError('Internal server error', response.text)
+
+        else:
+            raise QuickbookOnlineSDKError('Error: {0}'.format(response.status_code), response.text)

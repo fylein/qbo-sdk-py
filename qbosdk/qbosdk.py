@@ -49,11 +49,16 @@ class QuickbooksOnlineSDK:
         self.preferences = Preferences()
         self.exchangeRates = ExchangeRates()
         self.purchases = Purchases()
+        self.journal_entries = JournalEntries()
+        self.attachments = Attachments()
 
         self.update_server_url()
         self.update_access_token()
 
     def update_server_url(self):
+        """
+        Update the server url in all API objects.
+        """
         base_url = self.__base_url
 
         self.accounts.set_server_url(base_url)
@@ -63,6 +68,8 @@ class QuickbooksOnlineSDK:
         self.preferences.set_server_url(base_url)
         self.exchangeRates.set_server_url(base_url)
         self.purchases.set_server_url(base_url)
+        self.journal_entries.set_server_url(base_url)
+        self.attachments.set_server_url(base_url)
 
     def update_access_token(self):
         """
@@ -78,6 +85,8 @@ class QuickbooksOnlineSDK:
         self.preferences.change_access_token(access_token)
         self.exchangeRates.change_access_token(access_token)
         self.purchases.change_access_token(access_token)
+        self.journal_entries.change_access_token(access_token)
+        self.attachments.change_access_token(access_token)
 
     def __get_access_token(self):
         """Get the access token using a HTTP post.
