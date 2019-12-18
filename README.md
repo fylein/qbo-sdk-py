@@ -43,6 +43,26 @@ response = connection.accounts.get()
 
 See more details about the usage into the wiki pages of this project.
 
+## Integration Tests
+
+To run integration tests, you will need a mechanism to connect to a real qbo account. Save this info in a test_credentials.json file in your root directory:
+
+```json
+{
+  "client_id": "<client_id>",
+  "client_secret": "<client_secret>",
+  "realm_id": "<realm_id>",
+  "refresh_token": "<refresh_token>",
+  "environment": "<environment sandbox / production>"
+}
+```
+
+```bash
+$ pip install pytest
+
+$ python -m pytest test/integration
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
