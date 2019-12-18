@@ -12,5 +12,5 @@ jobs:
     - name: GitHub Action for pylint
       uses: cclauss/GitHub-Action-for-pylint@0.7.0
       with:
-        args: pylint --rcfile=.pylintrc 
+        args: pylint --rcfile=.pylintrc qbosdk
         
