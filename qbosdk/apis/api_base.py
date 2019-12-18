@@ -138,7 +138,11 @@ class ApiBase:
             A response from the request (dict).
         """
 
-        api_headers = {'Authorization': 'Bearer {0}'.format(self.__access_token)}
+        api_headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {0}'.format(self.__access_token)
+        }
 
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
