@@ -1,8 +1,11 @@
+"""
+Quickbooks Online
+"""
 from datetime import datetime, timedelta
 from .api_base import ApiBase
 
 
-class exchange_rates(ApiBase):
+class ExchangeRates(ApiBase):
     """Class for Categories APIs."""
 
     GET_EXCHANGE_RATES = "/query?query=select * from ExchangeRate where AsOfDate = '{0}' STARTPOSITION " \
@@ -17,5 +20,5 @@ class exchange_rates(ApiBase):
         if not as_of_date:
             as_of_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
-        exchange_rates.GET_EXCHANGE_RATES = exchange_rates.GET_EXCHANGE_RATES.format(as_of_date, '{0}')
-        return self._query_get_all('ExchangeRate', exchange_rates.GET_EXCHANGE_RATES)
+        ExchangeRates.GET_EXCHANGE_RATES = ExchangeRates.GET_EXCHANGE_RATES.format(as_of_date, '{0}')
+        return self._query_get_all('ExchangeRate', ExchangeRates.GET_EXCHANGE_RATES)

@@ -30,12 +30,13 @@ class QuickbooksOnlineSDK:
         self.__client_id = client_id
         self.__client_secret = client_secret
         self.refresh_token = refresh_token
+        self.__realm_id = realm_id
 
         if environment.lower() == 'production':
-            self.__base_url = 'https://quickbooks.api.intuit.com/v3/company/{0}'.format(realm_id)
+            self.__base_url = 'https://quickbooks.api.intuit.com/v3/company/{0}'.format(self.__realm_id)
             self.web_app_url = 'https://app.qbo.intuit.com'
         elif environment.lower() == 'sandbox':
-            self.__base_url = 'https://sandbox-quickbooks.api.intuit.com/v3/company/{0}'.format(realm_id)
+            self.__base_url = 'https://sandbox-quickbooks.api.intuit.com/v3/company/{0}'.format(self.__realm_id)
             self.web_app_url = 'https://app.sandbox.qbo.intuit.com'
         else:
             raise ValueError('environment can only be prodcution / sandbox')
@@ -47,7 +48,7 @@ class QuickbooksOnlineSDK:
         self.classes = Classes()
         self.employees = Employees()
         self.preferences = Preferences()
-        self.exchange_rates = exchange_rates()
+        self.exchange_rates = ExchangeRates()
         self.purchases = Purchases()
         self.journal_entries = JournalEntries()
         self.attachments = Attachments()
@@ -120,7 +121,7 @@ class QuickbooksOnlineSDK:
             self.refresh_token = auth['refresh_token']
 
         elif response.status_code == 400:
-            raise WrongParamsError('Somthing wrong with the request body', response.text)
+            raise WrongParamsError('Something wrong with the request body', response.text)
 
         elif response.status_code == 401:
             raise UnauthorizedClientError('Wrong client secret or/and refresh token', response.text)
@@ -132,4 +133,4 @@ class QuickbooksOnlineSDK:
             raise InternalServerError('Internal server error', response.text)
 
         else:
-            raise QuickbooksOnlineSDK('Error: {0}'.format(response.status_code), response.text)
+            raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)

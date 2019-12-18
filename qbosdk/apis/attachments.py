@@ -1,3 +1,6 @@
+"""
+Quickbooks Online attachables
+"""
 import json
 import textwrap
 from typing import Dict

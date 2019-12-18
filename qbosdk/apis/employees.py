@@ -1,3 +1,6 @@
+"""
+Quickbooks Online employees
+"""
 from .api_base import ApiBase
 
 

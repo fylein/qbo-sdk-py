@@ -1,3 +1,6 @@
+"""
+Quickbooks Online journal entries
+"""
 from typing import Dict
 from .api_base import ApiBase
 

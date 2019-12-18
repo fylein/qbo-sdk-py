@@ -1,3 +1,6 @@
+"""
+Quickbooks Online departments
+"""
 from .api_base import ApiBase
 
 
