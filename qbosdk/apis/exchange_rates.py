@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from .api_base import ApiBase
 
 
-class ExchangeRates(ApiBase):
+class exchange_rates(ApiBase):
     """Class for Categories APIs."""
 
     GET_EXCHANGE_RATES = "/query?query=select * from ExchangeRate where AsOfDate = '{0}' STARTPOSITION " \
@@ -17,5 +17,5 @@ class ExchangeRates(ApiBase):
         if not as_of_date:
             as_of_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
-        ExchangeRates.GET_EXCHANGE_RATES = ExchangeRates.GET_EXCHANGE_RATES.format(as_of_date, '{0}')
-        return self._query_get_all('ExchangeRate', ExchangeRates.GET_EXCHANGE_RATES)
+        exchange_rates.GET_EXCHANGE_RATES = exchange_rates.GET_EXCHANGE_RATES.format(as_of_date, '{0}')
+        return self._query_get_all('ExchangeRate', exchange_rates.GET_EXCHANGE_RATES)

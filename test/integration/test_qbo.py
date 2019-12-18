@@ -68,18 +68,18 @@ def test_classes(qbo, mock_qbo):
 
 def test_exchange_rates(qbo, mock_qbo):
     """
-    Test Quickbooks exchangeRates Object
+    Test Quickbooks exchange_rates Object
     :param qbo: qbo sdk instance
     :param mock_qbo: mock instance
     :return: None
     """
-    exchange_rates = qbo.exchangeRates.get()
-    mock_exchange_rates = mock_qbo.exchangeRates.get()
+    exchange_rates = qbo.exchange_rates.get()
+    mock_exchange_rates = mock_qbo.exchange_rates.get()
 
     assert dict_compare_keys(exchange_rates[0], mock_exchange_rates[0]) == [], \
-        'qbo.exchangeRates.get() has stuff that mock_qbo doesnt'
+        'qbo.exchange_rates.get() has stuff that mock_qbo doesnt'
     assert dict_compare_keys(mock_exchange_rates[0], exchange_rates[0]) == [], \
-        'mock_qbo.exchangeRates.get() has stuff that qbo doesnt'
+        'mock_qbo.exchange_rates.get() has stuff that qbo doesnt'
 
 
 def test_preferences(qbo, mock_qbo):

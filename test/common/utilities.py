@@ -22,7 +22,7 @@ def get_mock_qbo_from_file(filename):
     mock_qbo.employees.get.return_value = mock_qbo_dict['employees']
     mock_qbo.departments.get.return_value = mock_qbo_dict['departments']
     mock_qbo.classes.get.return_value = mock_qbo_dict['classes']
-    mock_qbo.exchangeRates.get.return_value = mock_qbo_dict['exchangeRates']
+    mock_qbo.exchange_rates.get.return_value = mock_qbo_dict['exchange_rates']
     mock_qbo.preferences.get.return_value = mock_qbo_dict['preferences']
     mock_qbo.journal_entries.get.return_value = mock_qbo_dict['journal_entries']
     mock_qbo.purchases.get.return_value = mock_qbo_dict['purchases']

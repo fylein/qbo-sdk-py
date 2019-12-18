@@ -1975,7 +1975,7 @@
       }
     }
   ],
-  "exchangeRates": [
+  "exchange_rates": [
     {
       "SourceCurrencyCode": "USD",
       "TargetCurrencyCode": "USD",

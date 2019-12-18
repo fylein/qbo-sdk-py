@@ -3,7 +3,7 @@ from .departments import Departments
 from .classes import Classes
 from .employees import Employees
 from .preferences import Preferences
-from .exchange_rates import ExchangeRates
+from .exchange_rates import exchange_rates
 from .purchases import Purchases
 from .journal_entries import JournalEntries
 from .attachments import Attachments
@@ -15,7 +15,7 @@ __all_ = [
     'Classes',
     'Employees',
     'Preferences',
-    'ExchangeRates',
+    'exchange_rates',
     'Purchases',
     'JournalEntries',
     'Attachments'
