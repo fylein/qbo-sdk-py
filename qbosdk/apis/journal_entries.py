@@ -10,6 +10,7 @@ class JournalEntries(ApiBase):
 
     GET_JOURNAL_ENTRIES = '/query?query=select * from JournalEntry STARTPOSITION {0} MAXRESULTS 1000'
     POST_JOURNAL_ENTRY = '/journalentry?minorversion=38'
+    DELETE_JOURNAL_ENTRY = '/journalentry?operation=delete'
 
     def get(self):
         """
@@ -20,8 +21,20 @@ class JournalEntries(ApiBase):
 
     def post(self, data: Dict):
         """
-        Post JournalEntry (check, etc) to Quickbooks Online
+        Post JournalEntry to Quickbooks Online
         :param data: Dict in JournalEntry schema
         :return:
         """
         return self._post_request(data, JournalEntries.POST_JOURNAL_ENTRY)
+
+    def delete(self, journal_entry_id: str):
+        """
+        Delete JournalEntry from Quickbooks Online
+        :param journal_entry_id: Journal Entry Id to remove
+        :return: Dict response
+        """
+        data = {
+            'Id': journal_entry_id,
+            'SyncToken': '1'
+        }
+        return self._post_request(data, JournalEntries.DELETE_JOURNAL_ENTRY)
