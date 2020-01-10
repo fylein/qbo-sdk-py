@@ -9,8 +9,9 @@ from .preferences import Preferences
 from .exchange_rates import ExchangeRates
 from .purchases import Purchases
 from .journal_entries import JournalEntries
+from .vendors import Vendors
+from .bills import Bills
 from .attachments import Attachments
-
 
 __all_ = [
     'Accounts',
@@ -20,6 +21,8 @@ __all_ = [
     'Preferences',
     'ExchangeRates',
     'Purchases',
+    'Vendors',
+    'Bills',
     'JournalEntries',
     'Attachments'
 ]
