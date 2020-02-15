@@ -12,6 +12,7 @@ from .journal_entries import JournalEntries
 from .vendors import Vendors
 from .bills import Bills
 from .attachments import Attachments
+from .customers import Customers
 
 __all_ = [
     'Accounts',
@@ -24,5 +25,6 @@ __all_ = [
     'Vendors',
     'Bills',
     'JournalEntries',
-    'Attachments'
+    'Attachments',
+    'Customers'
 ]
