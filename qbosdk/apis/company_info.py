@@ -10,7 +10,7 @@ class CompanyInfo(ApiBase):
     GET_COMPANY_INFO = '/companyinfo/{0}'
 
     def __init__(self, realm_id):
-        super().__init__(realm_id)
+        super().__init__()
         self.__realm_id = realm_id
 
     def get(self):
