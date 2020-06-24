@@ -6,6 +6,7 @@ from .departments import Departments
 from .classes import Classes
 from .employees import Employees
 from .preferences import Preferences
+from .company_info import CompanyInfo
 from .exchange_rates import ExchangeRates
 from .purchases import Purchases
 from .journal_entries import JournalEntries
@@ -18,6 +19,7 @@ __all_ = [
     'Accounts',
     'Departments',
     'Classes',
+    'CompanyInfo',
     'Employees',
     'Preferences',
     'ExchangeRates',
