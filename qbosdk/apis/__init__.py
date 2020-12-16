@@ -14,6 +14,7 @@ from .vendors import Vendors
 from .bills import Bills
 from .attachments import Attachments
 from .customers import Customers
+from .bill_payments import BillPayments
 
 __all_ = [
     'Accounts',
@@ -28,5 +29,6 @@ __all_ = [
     'Bills',
     'JournalEntries',
     'Attachments',
-    'Customers'
+    'Customers',
+    'BillPayments'
 ]
