@@ -107,7 +107,7 @@ class ApiBase:
 
         if response.status_code == 200:
             result = json.loads(response.text)
-            return result[object_type]
+            return result
 
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
