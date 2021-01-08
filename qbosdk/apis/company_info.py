@@ -19,4 +19,4 @@ class CompanyInfo(ApiBase):
         Returns:
             Dict in Preferences schema.
         """
-        return self._get_request('CompanyInfo', CompanyInfo.GET_COMPANY_INFO.format(self.__realm_id))
+        return self._get_request(CompanyInfo.GET_COMPANY_INFO.format(self.__realm_id))

@@ -41,4 +41,9 @@ class Bills(ApiBase):
         return self._post_request(data, Bills.DELETE_BILL)
 
     def get_by_id(self, bill_id):
-        return self._get_request('', Bills.GET_BILL_BY_ID.format(bill_id))
+        """
+        Get Bill from Quickbooks Online
+        :param bill_id: Bill Id
+        :return: Dict Response
+        """
+        return self._get_request(Bills.GET_BILL_BY_ID.format(bill_id))
