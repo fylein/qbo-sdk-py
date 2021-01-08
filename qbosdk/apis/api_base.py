@@ -85,7 +85,7 @@ class ApiBase:
 
         raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
 
-    def _get_request(self, api_url: str) -> List[Dict] or Dict:
+    def _get_request(self, object_type: str, api_url: str) -> List[Dict] or Dict:
         """Create a HTTP GET request.
 
         Parameters:
