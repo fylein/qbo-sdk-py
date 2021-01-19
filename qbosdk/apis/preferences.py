@@ -15,4 +15,4 @@ class Preferences(ApiBase):
         Returns:
             Dict in Preferences schema.
         """
-        return self._get_request(Preferences.GET_PREFERENCES)
+        return self._get_request('Preferences', Preferences.GET_PREFERENCES)

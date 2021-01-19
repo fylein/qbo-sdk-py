@@ -46,4 +46,4 @@ class Bills(ApiBase):
         :param bill_id: Bill Id
         :return: Dict Response
         """
-        return self._get_request(Bills.GET_BILL_BY_ID.format(bill_id))
+        return self._get_request('Bill', Bills.GET_BILL_BY_ID.format(bill_id))
