@@ -87,8 +87,10 @@ class ApiBase:
 
     def _get_request(self, object_type: str, api_url: str) -> List[Dict] or Dict:
         """Create a HTTP GET request.
+
         Parameters:
             api_url (str): Url for the wanted API.
+
         Returns:
             A response from the request (dict).
         """
