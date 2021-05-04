@@ -8,7 +8,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='qbosdk',
-    version='0.8.0',
+    version='0.9.0',
     author='Shwetabh Kumar',
     author_email='shwetabh.kumar@fyle.in',
     description='Python SDK for accessing Quickbooks Online APIs',
