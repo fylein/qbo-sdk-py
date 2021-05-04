@@ -24,4 +24,4 @@ class Customers(ApiBase):
         Returns:
             Count in Int.
         """
-        return self._query('Customer', Customers.COUNT_CUSTOMERS)['totalCount']
+        return self._query(Customers.COUNT_CUSTOMERS)['totalCount']

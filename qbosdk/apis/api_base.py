@@ -86,10 +86,9 @@ class ApiBase:
         raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
 
 
-    def _query(self, object_type: str, url: str) -> List[Dict]:
+    def _query(self, url: str) -> List[Dict]:
         """
         Returns results for query type GET calls
-        :param url: GET URL of object
         :param object_type: type of object
         :return: dict of the response
         """
