@@ -85,6 +85,45 @@ class ApiBase:
 
         raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
 
+
+    def _query(self, url: str) -> List[Dict]:
+        """
+        Returns results for query type GET calls
+        :param object_type: type of object
+        :return: dict of the response
+        """
+        request_url = '{0}{1}'.format(self.__server_url, url)
+        api_headers = {
+            'Authorization': 'Bearer {0}'.format(self.__access_token),
+            'Accept': 'application/json'
+        }
+
+        response = requests.get(url=request_url, headers=api_headers)
+
+        if response.status_code == 200:
+            data = json.loads(response.text)
+            return data['QueryResponse']
+
+        if response.status_code == 400:
+            raise WrongParamsError('Some of the parameters are wrong', response.text)
+
+        if response.status_code == 401:
+            raise InvalidTokenError('Invalid token, try to refresh it', response.text)
+
+        if response.status_code == 403:
+            raise NoPrivilegeError('Forbidden, the user has insufficient privilege', response.text)
+
+        if response.status_code == 404:
+            raise NotFoundItemError('Not found item with ID', response.text)
+
+        if response.status_code == 498:
+            raise ExpiredTokenError('Expired token, try to refresh it', response.text)
+
+        if response.status_code == 500:
+            raise InternalServerError('Internal server error', response.text)
+
+        raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
+
     def _get_request(self, object_type: str, api_url: str) -> List[Dict] or Dict:
         """Create a HTTP GET request.
 
