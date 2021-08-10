@@ -14,6 +14,7 @@ class Employees(ApiBase):
 
     def get(self):
         """Get a list of the existing Employees in the Organization.
+
         Returns:
             List with dicts in Employees schema.
         """
