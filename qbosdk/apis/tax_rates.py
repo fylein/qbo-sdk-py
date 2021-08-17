@@ -1,5 +1,5 @@
 """
-Quickbooks Online Tax Codes
+Quickbooks Online TaxRates
 """
 from .api_base import ApiBase
 
@@ -12,15 +12,15 @@ class TaxRates(ApiBase):
 
     def get(self):
         """
-        Get all Bills
-        :return: List of Dicts in Bill Schema
+        Get all Taxrates
+        :return: List of Dicts in Taxrates Schema
         """
         return self._query_get_all('TaxRate', TaxRates.GET_TAX_RATES)
 
     def get_by_id(self, taxrateId):
         """
-        Get Bill from Quickbooks Online
-        :param bill_id: Bill Id
+        Get Taxrates from Quickbooks Online
+        :param taxrateId: Taxrate Id
         :return: Dict Response
         """
         return self._get_request('TaxRate', TaxRates.GET_TAX_RATES_BY_ID.format(taxrateId))
