@@ -16,6 +16,7 @@ from .attachments import Attachments
 from .customers import Customers
 from .bill_payments import BillPayments
 from .tax_codes import TaxCodes
+from .tax_rates import TaxRates
 
 __all_ = [
     'Accounts',
@@ -32,5 +33,6 @@ __all_ = [
     'Attachments',
     'Customers',
     'BillPayments',
-    'TaxCodes'
+    'TaxCodes',
+    'TaxRates'
 ]
