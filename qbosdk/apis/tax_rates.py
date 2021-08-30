@@ -17,7 +17,7 @@ class TaxRates(ApiBase):
         """
         return self._query_get_all('TaxRate', TaxRates.GET_TAX_RATES)
 
-    def get_by_id(self, taxrateId):
+    def get_by_id(self, taxrateId: str):
         """
         Get Taxrates from Quickbooks Online
         :param taxrateId: Taxrate Id
