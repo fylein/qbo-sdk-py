@@ -58,6 +58,7 @@ class QuickbooksOnlineSDK:
         self.attachments = Attachments()
         self.bill_payments = BillPayments()
         self.tax_codes = TaxCodes()
+        self.tax_rates = TaxRates()
 
         self.update_server_url()
         self.update_access_token()
@@ -83,6 +84,7 @@ class QuickbooksOnlineSDK:
         self.attachments.set_server_url(base_url)
         self.bill_payments.set_server_url(base_url)
         self.tax_codes.set_server_url(base_url)
+        self.tax_rates.set_server_url(base_url)
 
     def update_access_token(self):
         """
@@ -106,6 +108,7 @@ class QuickbooksOnlineSDK:
         self.attachments.change_access_token(access_token)
         self.bill_payments.change_access_token(access_token)
         self.tax_codes.change_access_token(access_token)
+        self.tax_rates.change_access_token(access_token)
 
     def __get_access_token(self):
         """Get the access token using a HTTP post.
