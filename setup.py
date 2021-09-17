@@ -18,7 +18,7 @@ setuptools.setup(
     keywords=['quickbooks-online', 'quickbooks', 'fyle', 'api', 'python', 'sdk'],
     url='https://github.com/fylein/qbo-sdk-py',
     packages=setuptools.find_packages(),
-    install_requires=['requests==2.22.0', 'future==0.18.2'],
+    install_requires=['requests>=2.25.0', 'future==0.18.2'],
     classifiers=[
         'Topic :: Internet :: WWW/HTTP',
         'Intended Audience :: Developers',
