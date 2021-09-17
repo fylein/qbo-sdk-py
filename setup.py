@@ -8,7 +8,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='qbosdk',
-    version='0.13.0',
+    version='0.13.1',
     author='Shwetabh Kumar',
     author_email='shwetabh.kumar@fyle.in',
     description='Python SDK for accessing Quickbooks Online APIs',
@@ -18,7 +18,7 @@ setuptools.setup(
     keywords=['quickbooks-online', 'quickbooks', 'fyle', 'api', 'python', 'sdk'],
     url='https://github.com/fylein/qbo-sdk-py',
     packages=setuptools.find_packages(),
-    install_requires=['requests==2.22.0', 'future==0.18.2'],
+    install_requires=['requests>=2.25.0', 'future==0.18.2'],
     classifiers=[
         'Topic :: Internet :: WWW/HTTP',
         'Intended Audience :: Developers',
