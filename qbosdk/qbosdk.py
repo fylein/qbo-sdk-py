@@ -64,8 +64,6 @@ class QuickbooksOnlineSDK:
         self.update_server_url()
         self.update_access_token()
 
-        # self.revoke_qbo_token = self.revoke_refresh_token()
-
     def update_server_url(self):
         """
         Update the server url in all API objects.
