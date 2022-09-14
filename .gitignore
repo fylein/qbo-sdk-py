@@ -9,6 +9,7 @@ __pycache__/
 # Test Files
 usage.py
 test_credentials.json
+scripts/
 
 # C extensions
 *.so

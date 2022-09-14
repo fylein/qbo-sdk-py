@@ -1,7 +1,7 @@
 """
 Quickbooks Online init
 """
-from .qbosdk import QuickbooksOnlineSDK
+from .qbosdk import QuickbooksOnlineSDK, revoke_refresh_token
 from.exceptions import *
 
 __all__ = [
@@ -14,7 +14,8 @@ __all__ = [
     'NoPrivilegeError',
     'WrongParamsError',
     'NotFoundItemError',
-    'InternalServerError'
+    'InternalServerError',
+    'revoke_refresh_token'
 ]
 
 name = "qbosdk"
