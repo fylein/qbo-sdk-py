@@ -15,6 +15,7 @@ class QuickbooksOnlineSDK:
     Quickbooks Online SDK
     """
     TOKEN_URL = 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer'
+    TOKEN_REVOKE_URL = 'https://developer.API.intuit.com/v2/oauth2/tokens/revoke'
 
     def __init__(self, client_id: str, client_secret: str,
                  refresh_token: str, realm_id: str, environment: str):
@@ -62,6 +63,8 @@ class QuickbooksOnlineSDK:
 
         self.update_server_url()
         self.update_access_token()
+
+        # self.revoke_qbo_token = self.revoke_refresh_token()
 
     def update_server_url(self):
         """
@@ -155,3 +158,27 @@ class QuickbooksOnlineSDK:
 
         else:
             raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
+
+def revoke_refresh_token(refresh_token: str, client_id: str, client_secret: str):
+    api_data = {
+        'token': refresh_token
+    }
+
+    auth = '{0}:{1}'.format(client_id, client_secret)
+    auth = base64.b64encode(auth.encode('utf-8'))
+
+    request_header = {
+        'Accept': 'application/json',
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Basic {0}'.format(
+            str(auth.decode())
+        )
+    }
+
+    response = requests.post(url=QuickbooksOnlineSDK.TOKEN_REVOKE_URL, data=api_data, headers=request_header)
+
+    if response.status_code == 200:
+        return {'message': 'Token revoked successfully'}
+
+    else:
+        raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
