@@ -6,7 +6,8 @@ import base64
 import requests
 from future.moves.urllib.parse import urlencode
 
-from .exceptions import *
+from .exceptions import NotFoundClientError, QuickbooksOnlineSDKError, UnauthorizedClientError,\
+    WrongParamsError, InternalServerError
 from .apis import *
 
 
