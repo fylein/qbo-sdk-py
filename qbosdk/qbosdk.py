@@ -6,7 +6,8 @@ import base64
 import requests
 from future.moves.urllib.parse import urlencode
 
-from .exceptions import *
+from .exceptions import NotFoundClientError, QuickbooksOnlineSDKError, UnauthorizedClientError,\
+    WrongParamsError, InternalServerError
 from .apis import *
 
 
@@ -60,6 +61,7 @@ class QuickbooksOnlineSDK:
         self.bill_payments = BillPayments()
         self.tax_codes = TaxCodes()
         self.tax_rates = TaxRates()
+        self.items = Items()
 
         self.update_server_url()
         self.update_access_token()
@@ -86,6 +88,7 @@ class QuickbooksOnlineSDK:
         self.bill_payments.set_server_url(base_url)
         self.tax_codes.set_server_url(base_url)
         self.tax_rates.set_server_url(base_url)
+        self.items.set_server_url(base_url)
 
     def update_access_token(self):
         """
@@ -110,6 +113,7 @@ class QuickbooksOnlineSDK:
         self.bill_payments.change_access_token(access_token)
         self.tax_codes.change_access_token(access_token)
         self.tax_rates.change_access_token(access_token)
+        self.items.change_access_token(access_token)
 
     def __get_access_token(self):
         """Get the access token using a HTTP post.

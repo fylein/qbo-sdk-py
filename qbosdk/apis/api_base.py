@@ -6,7 +6,8 @@ from typing import List, Dict
 
 import requests
 
-from ..exceptions import *
+from ..exceptions import WrongParamsError, InvalidTokenError, QuickbooksOnlineSDKError, \
+    NoPrivilegeError, NotFoundItemError, ExpiredTokenError, InternalServerError
 
 
 class ApiBase:

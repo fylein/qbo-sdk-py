@@ -17,6 +17,7 @@ from .customers import Customers
 from .bill_payments import BillPayments
 from .tax_codes import TaxCodes
 from .tax_rates import TaxRates
+from .items import Items
 
 __all_ = [
     'Accounts',
@@ -34,5 +35,6 @@ __all_ = [
     'Customers',
     'BillPayments',
     'TaxCodes',
-    'TaxRates'
+    'TaxRates',
+    'Items'
 ]
