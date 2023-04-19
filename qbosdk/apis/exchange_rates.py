@@ -32,4 +32,3 @@ class ExchangeRates(ApiBase):
         """
         return self._get_request(
             'ExchangeRate', self.GET_EXCHANGE_RATES_BY_SOURCE.format(source_currency_code))
-
