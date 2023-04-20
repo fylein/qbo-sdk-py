@@ -10,7 +10,7 @@ class ExchangeRates(ApiBase):
 
     GET_EXCHANGE_RATES = "/query?query=select * from ExchangeRate where AsOfDate = '{0}' STARTPOSITION " \
                          "{1} MAXRESULTS 1000"
-    GET_EXCHANGE_RATES_BY_SOURCE = "/exchangerate?sourcecurrencycode={0}"
+    GET_EXCHANGE_RATES_BY_SOURCE = "/exchangerate?sourcecurrencycode={0}&asofdate={1}"
 
     def get(self, as_of_date: str = None):
         """
@@ -30,5 +30,6 @@ class ExchangeRates(ApiBase):
         :param as_of_date: date to get rates for (1 day prior if left empty)
         :return: List of Dicts for exchange rates
         """
+        as_of_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
         return self._get_request(
-            'ExchangeRate', self.GET_EXCHANGE_RATES_BY_SOURCE.format(source_currency_code))
+            'ExchangeRate', self.GET_EXCHANGE_RATES_BY_SOURCE.format(source_currency_code, as_of_date))
