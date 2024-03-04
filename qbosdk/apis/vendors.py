@@ -21,6 +21,14 @@ class Vendors(ApiBase):
         """
         return self._query_get_all('Vendor', Vendors.GET_VENDORS)
 
+    def get_all_generator(self):
+        """Get a list of the existing Vendors in the Organization.
+
+        Returns:
+            Generator with dicts in Vendors schema.
+        """
+        return self._query_get_all_generator('Vendor', Vendors.GET_VENDORS)
+
     def post(self, data: Dict):
         """
         Post Vendor to Quickbooks Online

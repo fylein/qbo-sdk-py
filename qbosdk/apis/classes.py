@@ -16,3 +16,11 @@ class Classes(ApiBase):
             List with dicts in Classes schema.
         """
         return self._query_get_all('Class', Classes.GET_CLASSES)
+
+    def get_all_generator(self):
+        """Get a list of the existing Classes in the Organization.
+
+        Returns:
+            Generator with dicts in Classes schema.
+        """
+        return self._query_get_all_generator('Class', Classes.GET_CLASSES)

@@ -17,6 +17,13 @@ class TaxRates(ApiBase):
         """
         return self._query_get_all('TaxRate', TaxRates.GET_TAX_RATES)
 
+    def get_all_generator(self):
+        """
+        Get all Taxrates
+        :return: Generator of Dicts in Taxrates Schema
+        """
+        return self._query_get_all_generator('TaxRate', TaxRates.GET_TAX_RATES)
+
     def get_by_id(self, taxrateId: str):
         """
         Get Taxrates from Quickbooks Online

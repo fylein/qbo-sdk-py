@@ -17,3 +17,11 @@ class Items(ApiBase):
             List with dicts in Items schema.
         """
         return self._query_get_all('Item', Items.GET_ITEMS)
+
+    def get_all_generator(self):
+        """Get a list of the existing items in the Organization.
+
+        Returns:
+            Generator with dicts in Items schema.
+        """
+        return self._query_get_all_generator('Item', Items.GET_ITEMS)

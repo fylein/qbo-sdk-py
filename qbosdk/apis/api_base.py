@@ -2,7 +2,7 @@
 API Base class with util functions
 """
 import json
-from typing import List, Dict
+from typing import List, Dict, Generator
 
 import requests
 
@@ -86,6 +86,58 @@ class ApiBase:
 
         raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
 
+    def _query_get_all_generator(self, object_type: str, url: str) -> Generator[Dict, None, None]:
+        """
+        Gets all the objects of a particular type for query type GET calls
+        :param url: GET URL of object
+        :param object_type: type of object
+        :return: list of objects
+        """
+        start_position = 1
+
+        request_url = '{0}{1}'.format(self.__server_url, url)
+
+        api_headers = {
+            'Authorization': 'Bearer {0}'.format(self.__access_token),
+            'Accept': 'application/json'
+        }
+
+        while True:
+            try:
+                response = requests.get(url=request_url.format(start_position), headers=api_headers)
+                response.raise_for_status()
+
+                data = json.loads(response.text)
+                query_response = data['QueryResponse']
+
+                if not query_response[object_type]:
+                    break
+
+                for obj in query_response[object_type]:
+                    yield obj
+
+                start_position += 1000
+
+            except requests.exceptions.HTTPError as err:
+                if err.response.status_code == 400:
+                    raise WrongParamsError('Some of the parameters are wrong', err.response.text)
+
+                if err.response.status_code == 401:
+                    raise InvalidTokenError('Invalid token, try to refresh it', err.response.text)
+
+                if err.response.status_code == 403:
+                    raise NoPrivilegeError('Forbidden, the user has insufficient privilege', err.response.text)
+
+                if err.response.status_code == 404:
+                    raise NotFoundItemError('Not found item with ID', err.response.text)
+
+                if err.response.status_code == 498:
+                    raise ExpiredTokenError('Expired token, try to refresh it', err.responseesponse.text)
+
+                if err.response.status_code == 500:
+                    raise InternalServerError('Internal server error', err.response.text)
+
+                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text)
 
     def _query(self, url: str) -> List[Dict]:
         """

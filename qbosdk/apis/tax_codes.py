@@ -16,3 +16,11 @@ class TaxCodes(ApiBase):
             Dict in TaxCode schema.
         """
         return self._query_get_all('TaxCode', TaxCodes.GET_TAX_CODES)
+
+    def get_all_generator(self):
+        """Get a list of the existing Tax Code in the Organization.
+
+        Returns:
+            Generator with dicts in TaxCode schema.
+        """
+        return self._query_get_all_generator('TaxCode', TaxCodes.GET_TAX_CODES)
