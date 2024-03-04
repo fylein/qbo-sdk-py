@@ -110,6 +110,9 @@ class ApiBase:
                 data = json.loads(response.text)
                 query_response = data['QueryResponse']
 
+                if not query_response[object_type]:
+                    break
+
                 for obj in query_response[object_type]:
                     yield obj
 
