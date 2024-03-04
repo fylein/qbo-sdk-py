@@ -20,6 +20,14 @@ class Employees(ApiBase):
         """
         return self._query_get_all('Employee', Employees.GET_EMPLOYEES)
 
+    def get_all_generator(self):
+        """Get a list of the existing Employees in the Organization.
+
+        Returns:
+            Generator with dicts in Employees schema.
+        """
+        return self._query_get_all_generator('Employee', Employees.GET_EMPLOYEES)
+
     def post(self, data: Dict):
         """
         Post Employee to Quickbooks Online

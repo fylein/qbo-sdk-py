@@ -18,6 +18,14 @@ class Customers(ApiBase):
         """
         return self._query_get_all('Customer', Customers.GET_CUSTOMERS)
 
+    def get_all_generator(self):
+        """Get a list of the existing Customers in the Organization.
+
+        Returns:
+            Generator with dicts in Customers schema.
+        """
+        return self._query_get_all_generator('Customer', Customers.GET_CUSTOMERS)
+
     def count(self):
         """Get count of Customers in the Organization.
 

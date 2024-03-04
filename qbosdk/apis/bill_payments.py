@@ -19,6 +19,13 @@ class BillPayments(ApiBase):
         """
         return self._query_get_all('BillPayment', BillPayments.GET_BILLS)
 
+    def get_all_generator(self):
+        """
+        Get all Bill Payments
+        :return: Generator of Dicts in Bill Payment Schema
+        """
+        return self._query_get_all_generator('BillPayment', BillPayments.GET_BILLS)
+
     def post(self, data: Dict):
         """
         Post Bill Payment to Quickbooks Online

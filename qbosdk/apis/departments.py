@@ -16,3 +16,11 @@ class Departments(ApiBase):
             List with dicts in Departments schema.
         """
         return self._query_get_all('Department', Departments.GET_DEPARTMENTS)
+
+    def get_all_generator(self):
+        """Get a list of the existing Departments in the Organization.
+
+        Returns:
+            Generator with dicts in Departments schema.
+        """
+        return self._query_get_all_generator('Department', Departments.GET_DEPARTMENTS)

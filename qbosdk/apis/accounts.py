@@ -16,3 +16,11 @@ class Accounts(ApiBase):
             List with dicts in Accounts schema.
         """
         return self._query_get_all('Account', Accounts.GET_ACCOUNTS)
+
+    def get_all_generator(self):
+        """Get a generator of all the existing Accounts in the Organization.
+
+        Returns:
+            Generator with dicts in Accounts schema.
+        """
+        return self._query_get_all_generator('Account', Accounts.GET_ACCOUNTS)

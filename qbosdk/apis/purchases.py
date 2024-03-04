@@ -19,6 +19,13 @@ class Purchases(ApiBase):
         """
         return self._query_get_all('Purchase', Purchases.GET_PURCHASES)
 
+    def get_all_generator(self):
+        """
+        Get all Purchases
+        :return: Generator with Dicts in Purchase Schema
+        """
+        return self._query_get_all_generator('Purchase', Purchases.GET_PURCHASES)
+
     def post(self, data: Dict):
         """
         Post Purchase (check, etc) to Quickbooks Online

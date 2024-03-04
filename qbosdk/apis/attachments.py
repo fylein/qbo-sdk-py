@@ -22,6 +22,13 @@ class Attachments(ApiBase):
         """
         return self._query_get_all('Attachable', Attachments.GET_ATTACHABLES)
 
+    def get_all_generator(self):
+        """
+        Get all Attachables
+        :return: Generator with Dicts in Attachable Schema
+        """
+        return self._query_get_all_generator('Attachable', Attachments.GET_ATTACHABLES)
+
     def post(self, ref_id: str, ref_type: str, content, file_name):
         """
         Post Attachable (check, etc) to Quickbooks Online

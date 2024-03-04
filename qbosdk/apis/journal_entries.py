@@ -19,6 +19,13 @@ class JournalEntries(ApiBase):
         """
         return self._query_get_all('JournalEntry', JournalEntries.GET_JOURNAL_ENTRIES)
 
+    def get_all_generator(self):
+        """
+        Get all JournalEntries
+        :return: Generator with Dicts in JournalEntry Schema
+        """
+        return self._query_get_all_generator('JournalEntry', JournalEntries.GET_JOURNAL_ENTRIES)
+
     def post(self, data: Dict):
         """
         Post JournalEntry to Quickbooks Online

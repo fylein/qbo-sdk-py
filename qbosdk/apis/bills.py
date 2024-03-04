@@ -20,6 +20,13 @@ class Bills(ApiBase):
         """
         return self._query_get_all('Bill', Bills.GET_BILLS)
 
+    def get_all_generator(self):
+        """
+        Get all Bills
+        :return: Generator with Dicts in Bill Schema
+        """
+        return self._query_get_all_generator('Bill', Bills.GET_BILLS)
+
     def post(self, data: Dict):
         """
         Post Bill to Quickbooks Online
