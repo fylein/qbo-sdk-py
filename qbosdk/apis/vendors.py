@@ -46,3 +46,18 @@ class Vendors(ApiBase):
         response = self._get_request('QueryResponse', Vendors.SEARCH_VENDOR.format(display_name))
 
         return response['Vendor'][0] if 'Vendor' in response else None
+
+    def get_inactive(self, last_updated_time):
+        """
+        Retrieves a list of inactive vendors from the QuickBooks Online API.
+
+        :param last_updated_time: The last updated time to filter the vendors.
+        :return: A list of inactive vendors.
+        """
+
+        QUERY = "/query?query=select * from Vendor where Active=false"
+        if last_updated_time:
+            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+
+        return self._query_get_all_generator('Vendor', QUERY)

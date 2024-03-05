@@ -33,3 +33,18 @@ class Customers(ApiBase):
             Count in Int.
         """
         return self._query(Customers.COUNT_CUSTOMERS)['totalCount']
+
+    def get_inactive(self, last_updated_time):
+        """
+        Retrieves a list of inactive customers from the QuickBooks Online API.
+
+        :param last_updated_time: The last updated time to filter the customers.
+        :return: A list of inactive customers.
+        """
+
+        QUERY = "/query?query=select * from Customer where Active=false"
+        if last_updated_time:
+            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+
+        return self._query_get_all_generator('Customer', QUERY)

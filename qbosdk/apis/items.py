@@ -25,3 +25,18 @@ class Items(ApiBase):
             Generator with dicts in Items schema.
         """
         return self._query_get_all_generator('Item', Items.GET_ITEMS)
+
+    def get_inactive(self, last_updated_time):
+        """
+        Retrieves a list of inactive items from the QuickBooks Online API.
+
+        :param last_updated_time: The last updated time to filter the items.
+        :return: A list of inactive items.
+        """
+
+        QUERY = "/query?query=select * from Item where Active=false"
+        if last_updated_time:
+            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+
+        return self._query_get_all_generator('Item', QUERY)
