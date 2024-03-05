@@ -24,3 +24,18 @@ class Accounts(ApiBase):
             Generator with dicts in Accounts schema.
         """
         return self._query_get_all_generator('Account', Accounts.GET_ACCOUNTS)
+
+    def get_inactive(self, last_updated_time: None):
+        """
+        Retrieves a list of inactive accounts from the QuickBooks Online API.
+
+        :param last_updated_time: The last updated time to filter the accounts.
+        :return: A list of inactive accounts.
+        """
+
+        QUERY = "/query?query=select * from Account where Active=false"
+        if last_updated_time:
+            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+
+        return self._query_get_all_generator('Account', QUERY)
