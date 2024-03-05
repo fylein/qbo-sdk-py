@@ -110,7 +110,7 @@ class ApiBase:
                 data = json.loads(response.text)
                 query_response = data['QueryResponse']
 
-                if not query_response[object_type]:
+                if not query_response or object_type not in query_response:
                     break
 
                 for obj in query_response[object_type]:
