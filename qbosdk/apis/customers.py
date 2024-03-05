@@ -34,7 +34,7 @@ class Customers(ApiBase):
         """
         return self._query(Customers.COUNT_CUSTOMERS)['totalCount']
 
-    def get_inactive(self, last_updated_time):
+    def get_inactive(self, last_updated_time: None):
         """
         Retrieves a list of inactive customers from the QuickBooks Online API.
 

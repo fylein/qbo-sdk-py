@@ -47,7 +47,7 @@ class Vendors(ApiBase):
 
         return response['Vendor'][0] if 'Vendor' in response else None
 
-    def get_inactive(self, last_updated_time):
+    def get_inactive(self, last_updated_time: None):
         """
         Retrieves a list of inactive vendors from the QuickBooks Online API.
 

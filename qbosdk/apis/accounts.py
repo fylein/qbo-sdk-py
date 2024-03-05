@@ -25,7 +25,7 @@ class Accounts(ApiBase):
         """
         return self._query_get_all_generator('Account', Accounts.GET_ACCOUNTS)
 
-    def get_inactive(self, last_updated_time):
+    def get_inactive(self, last_updated_time: None):
         """
         Retrieves a list of inactive accounts from the QuickBooks Online API.
 
