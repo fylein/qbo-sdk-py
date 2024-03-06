@@ -113,8 +113,7 @@ class ApiBase:
                 if not query_response or object_type not in query_response:
                     break
 
-                for obj in query_response[object_type]:
-                    yield obj
+                yield query_response[object_type]
 
                 start_position += 1000
 
