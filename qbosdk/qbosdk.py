@@ -7,7 +7,7 @@ import requests
 from future.moves.urllib.parse import urlencode
 
 from .exceptions import NotFoundClientError, QuickbooksOnlineSDKError, UnauthorizedClientError,\
-    WrongParamsError, InternalServerError
+    WrongParamsError, InternalServerError, InvalidTokenError
 from .apis import *
 
 
@@ -159,7 +159,7 @@ class QuickbooksOnlineSDK:
             raise InternalServerError('Internal server error', response.text)
 
         else:
-            raise QuickbooksOnlineSDKError('Error: {0}'.format(response.status_code), response.text)
+            raise InvalidTokenError('Error: {0}'.format(response.status_code), response.text)
 
 def revoke_refresh_token(refresh_token: str, client_id: str, client_secret: str):
     api_data = {
