@@ -9,6 +9,7 @@ class Items(ApiBase):
     """Class for Items APIs."""
 
     GET_ITEMS = '/query?query=select * from Item STARTPOSITION {0} MAXRESULTS 1000'
+    COUNT_ITEMS = '/query?query=select count(*) from Item where Active = True'
 
     def get(self):
         """Get a list of the existing items in the Organization.
@@ -40,3 +41,11 @@ class Items(ApiBase):
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
         return self._query_get_all_generator('Item', QUERY)
+
+    def count(self):
+        """Get count of Items in the Organization.
+
+        Returns:
+            Count in Int.
+        """
+        return self._query(Items.COUNT_ITEMS)['totalCount']

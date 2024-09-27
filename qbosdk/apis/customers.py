@@ -8,7 +8,7 @@ class Customers(ApiBase):
     """Class for Customer APIs."""
 
     GET_CUSTOMERS = '/query?query=select * from Customer STARTPOSITION {0} MAXRESULTS 1000'
-    COUNT_CUSTOMERS = '/query?query=select count(*) from Customer'
+    COUNT_CUSTOMERS = '/query?query=select count(*) from Customer where Active = True'
 
     def get(self):
         """Get a list of the existing Customers in the Organization.
@@ -31,7 +31,7 @@ class Customers(ApiBase):
 
         Returns:
             Count in Int.
-        """
+        """  
         return self._query(Customers.COUNT_CUSTOMERS)['totalCount']
 
     def get_inactive(self, last_updated_time: None):

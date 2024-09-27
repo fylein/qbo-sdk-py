@@ -8,6 +8,7 @@ class Accounts(ApiBase):
     """Class for Categories APIs."""
 
     GET_ACCOUNTS = '/query?query=select * from Account STARTPOSITION {0} MAXRESULTS 1000'
+    ACCOUNT_COUNT = '/query?query=select count(*) from Account where Active = True'
 
     def get(self):
         """Get a list of the existing Accounts in the Organization.
@@ -39,3 +40,11 @@ class Accounts(ApiBase):
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
         return self._query_get_all_generator('Account', QUERY)
+
+    def count(self):
+        """Get count of Accounts in the Organization.
+
+        Returns:
+            Count in Int.
+        """
+        return self._query(Accounts.ACCOUNT_COUNT)['totalCount']

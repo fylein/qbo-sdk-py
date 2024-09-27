@@ -12,6 +12,7 @@ class Vendors(ApiBase):
     GET_VENDORS = '/query?query=select * from Vendor STARTPOSITION {0} MAXRESULTS 1000'
     POST_VENDOR = '/vendor?minorversion=38'
     SEARCH_VENDOR = "/query?query=select * from Vendor where DisplayName = '{0}'"
+    COUNT_VENDORS = '/query?query=select count(*) from Vendor where Active = True'
 
     def get(self):
         """Get a list of the existing Vendors in the Organization.
@@ -61,3 +62,12 @@ class Vendors(ApiBase):
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
         return self._query_get_all_generator('Vendor', QUERY)
+
+    def count(self):
+        """Get count of Vendors in the Organization.
+
+        Returns:
+            Count in Int.
+        """
+        return self._query(Vendors.COUNT_VENDORS)['totalCount']
+

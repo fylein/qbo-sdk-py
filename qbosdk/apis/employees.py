@@ -11,6 +11,7 @@ class Employees(ApiBase):
 
     GET_EMPLOYEES = '/query?query=select * from Employee STARTPOSITION {0} MAXRESULTS 1000'
     POST_EMPLOYEE = '/employee?minorversion=38'
+    COUNT_EMPLOYEES = '/query?query=select count(*) from Employee where Active = True'
 
     def get(self):
         """Get a list of the existing Employees in the Organization.
@@ -35,3 +36,12 @@ class Employees(ApiBase):
         :return:
         """
         return self._post_request(data, Employees.POST_EMPLOYEE)
+
+    def count(self):
+        """Get count of Employees in the Organization.
+
+        Returns:
+            Count in Int.
+        """
+        return self._query(Employees.COUNT_EMPLOYEES)['totalCount']
+
