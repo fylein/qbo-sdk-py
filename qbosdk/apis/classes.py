@@ -32,5 +32,5 @@ class Classes(ApiBase):
 
         Returns:
             Count in Int.
-        """  
+        """
         return self._query(Classes.COUNT_CLASSES)['totalCount']

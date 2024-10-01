@@ -44,4 +44,3 @@ class Employees(ApiBase):
             Count in Int.
         """
         return self._query(Employees.COUNT_EMPLOYEES)['totalCount']
-

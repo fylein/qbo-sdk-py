@@ -31,7 +31,7 @@ class Customers(ApiBase):
 
         Returns:
             Count in Int.
-        """  
+        """
         return self._query(Customers.COUNT_CUSTOMERS)['totalCount']
 
     def get_inactive(self, last_updated_time: None):

@@ -70,4 +70,3 @@ class Vendors(ApiBase):
             Count in Int.
         """
         return self._query(Vendors.COUNT_VENDORS)['totalCount']
-
