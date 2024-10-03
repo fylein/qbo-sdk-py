@@ -9,6 +9,11 @@ import requests
 from ..exceptions import WrongParamsError, InvalidTokenError, QuickbooksOnlineSDKError, \
     NoPrivilegeError, NotFoundItemError, ExpiredTokenError, InternalServerError
 
+import logging
+
+
+logger = logging.getLogger(__name__)
+logger.level = logging.WARNING
 
 class ApiBase:
     """The base class for all API classes."""
@@ -237,6 +242,8 @@ class ApiBase:
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
 
+        logger.debug('Payload for post request: %s', data)
+
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
             headers=api_headers,
@@ -246,6 +253,8 @@ class ApiBase:
         if response.status_code == 200:
             result = json.loads(response.text)
             return result
+        
+        logger.debug('Response for post request: %s', response.text)
 
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
