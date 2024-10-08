@@ -117,14 +117,14 @@ class ApiBase:
                 if not query_response or object_type not in query_response:
                     break
 
-                logger.debug('Response for get request for url: %s, %s', url, query_response)
+                logger.debug('Response for get request for url: %s, %s', url, response.text)
                 
                 yield query_response[object_type]
 
                 start_position += 1000
             
             except requests.exceptions.HTTPError as err:
-                logger.info('Response for get request for url: %s, %s', url, err.response)
+                logger.info('Response for get request for url: %s, %s', url, err.response.text)
                 if err.response.status_code == 400:
                     raise WrongParamsError('Some of the parameters are wrong', err.response.text)
 
@@ -259,7 +259,7 @@ class ApiBase:
             result = json.loads(response.text)
             return result
     
-        logger.info('Payload for post request: %s', data)
+        logger.debug('Payload for post request: %s', data)
         logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
@@ -307,8 +307,13 @@ class ApiBase:
         )
 
         if response.status_code == 200:
+            logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result['AttachableResponse'][0]['Attachable']
+
+
+        logger.debug('Payload for post request: %s', data)
+        logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
