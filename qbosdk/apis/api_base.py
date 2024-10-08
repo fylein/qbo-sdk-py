@@ -1,6 +1,7 @@
 """
 API Base class with util functions
 """
+import logging
 import json
 from typing import List, Dict, Generator
 
@@ -9,11 +10,7 @@ import requests
 from ..exceptions import WrongParamsError, InvalidTokenError, QuickbooksOnlineSDKError, \
     NoPrivilegeError, NotFoundItemError, ExpiredTokenError, InternalServerError
 
-import logging
-
-
 logger = logging.getLogger(__name__)
-logger.level = logging.WARNING
 
 class ApiBase:
     """The base class for all API classes."""
@@ -59,6 +56,7 @@ class ApiBase:
         response = requests.get(url=request_url.format(start_position), headers=api_headers)
 
         if response.status_code == 200:
+            logger.debug('Response for get request for url: %s, %s', url, response.text)
             data = json.loads(response.text)
             query_response = data['QueryResponse']
 
@@ -71,6 +69,7 @@ class ApiBase:
                 query_response = data['QueryResponse']
             return objects
 
+        logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
@@ -118,11 +117,14 @@ class ApiBase:
                 if not query_response or object_type not in query_response:
                     break
 
+                logger.debug('Response for get request for url: %s, %s', url, query_response)
+                
                 yield query_response[object_type]
 
                 start_position += 1000
-
+            
             except requests.exceptions.HTTPError as err:
+                logger.info('Response for get request for url: %s, %s', url, err.response)
                 if err.response.status_code == 400:
                     raise WrongParamsError('Some of the parameters are wrong', err.response.text)
 
@@ -158,9 +160,11 @@ class ApiBase:
         response = requests.get(url=request_url, headers=api_headers)
 
         if response.status_code == 200:
+            logger.debug('Response for get request for url: %s, %s', url, response.text)
             data = json.loads(response.text)
             return data['QueryResponse']
 
+        logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
@@ -202,9 +206,11 @@ class ApiBase:
         )
 
         if response.status_code == 200:
+            logger.debug('Response for get request for url: %s, %s', api_url, response.text)
             result = json.loads(response.text)
             return result[object_type]
 
+        logger.info('Response for get request for url: %s, %s', api_url, response.text)
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
@@ -242,8 +248,6 @@ class ApiBase:
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
 
-        logger.debug('Payload for post request: %s', data)
-
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
             headers=api_headers,
@@ -251,10 +255,12 @@ class ApiBase:
         )
 
         if response.status_code == 200:
+            logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result
-        
-        logger.debug('Response for post request: %s', response.text)
+    
+        logger.info('Payload for post request: %s', data)
+        logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
             raise WrongParamsError('Some of the parameters are wrong', response.text)
