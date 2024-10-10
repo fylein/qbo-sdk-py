@@ -1,7 +1,9 @@
 """
 API Base class with util functions
 """
+import sys
 import logging
+import logging.config
 import json
 from typing import List, Dict, Generator
 
@@ -10,6 +12,9 @@ import requests
 from ..exceptions import WrongParamsError, InvalidTokenError, QuickbooksOnlineSDKError, \
     NoPrivilegeError, NotFoundItemError, ExpiredTokenError, InternalServerError
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("requests").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 class ApiBase:
@@ -56,6 +61,7 @@ class ApiBase:
         response = requests.get(url=request_url.format(start_position), headers=api_headers)
 
         if response.status_code == 200:
+            print('bajsdbkjas')
             logger.debug('Response for get request for url: %s, %s', url, response.text)
             data = json.loads(response.text)
             query_response = data['QueryResponse']
@@ -254,12 +260,13 @@ class ApiBase:
             json=data
         )
 
+        logger.debug('Payload for post request: %s', data)
+
         if response.status_code == 200:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result
     
-        logger.debug('Payload for post request: %s', data)
         logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
@@ -306,13 +313,13 @@ class ApiBase:
             data=data
         )
 
+        logger.debug('Payload for post request: %s', data)
+
         if response.status_code == 200:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result['AttachableResponse'][0]['Attachable']
-
-
-        logger.debug('Payload for post request: %s', data)
+        
         logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
