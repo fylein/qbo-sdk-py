@@ -61,7 +61,6 @@ class ApiBase:
         response = requests.get(url=request_url.format(start_position), headers=api_headers)
 
         if response.status_code == 200:
-            print('bajsdbkjas')
             logger.debug('Response for get request for url: %s, %s', url, response.text)
             data = json.loads(response.text)
             query_response = data['QueryResponse']
@@ -319,7 +318,7 @@ class ApiBase:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result['AttachableResponse'][0]['Attachable']
-        
+
         logger.info('Response for post request: %s', response.text)
 
         if response.status_code == 400:
