@@ -11,6 +11,7 @@ class Purchases(ApiBase):
     GET_PURCHASES = '/query?query=select * from Purchase STARTPOSITION {0} MAXRESULTS 1000'
     POST_PURCHASE = '/purchase?minorversion=38'
     DELETE_PURCHASE = '/purchase?operation=delete'
+    GET_PURCHASE_BY_ID = "/query?query=select * from Purchase where Id = \'{0}\'"
 
     def get(self):
         """
@@ -45,3 +46,11 @@ class Purchases(ApiBase):
             'SyncToken': '1'
         }
         return self._post_request(data, Purchases.DELETE_PURCHASE)
+
+    def get_by_id(self, purchase_id: str):
+        """
+        Get Purchase by Id
+        :param purchase_id: Purchase Id
+        :return: Dict in Purchase schema
+        """
+        return self._query(self.GET_PURCHASE_BY_ID.format(purchase_id))
