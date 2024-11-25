@@ -162,7 +162,7 @@ class ApiBase:
         if response.status_code == 200:
             logger.debug('Response for get request for url: %s, %s', url, response.text)
             data = json.loads(response.text)
-            return data['QueryResponse']
+            return data['QueryResponse'] if 'QueryResponse' in data else data
 
         logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:

@@ -11,6 +11,7 @@ class JournalEntries(ApiBase):
     GET_JOURNAL_ENTRIES = '/query?query=select * from JournalEntry STARTPOSITION {0} MAXRESULTS 1000'
     POST_JOURNAL_ENTRY = '/journalentry?minorversion=53'
     DELETE_JOURNAL_ENTRY = '/journalentry?operation=delete'
+    GET_JOURNAL_ENTRY_BY_ID = '/journalentry/{0}'
 
     def get(self):
         """
@@ -33,6 +34,14 @@ class JournalEntries(ApiBase):
         :return:
         """
         return self._post_request(data, JournalEntries.POST_JOURNAL_ENTRY)
+
+    def get_by_id(self, journal_entry_id):
+        """
+        Get JournalEntry by Id
+        :param journal_entry_id: Journal Entry Id
+        :return: Dict in JournalEntry schema
+        """
+        return self._get_request('JournalEntry', JournalEntries.GET_JOURNAL_ENTRY_BY_ID.format(journal_entry_id))
 
     def delete(self, journal_entry_id: str):
         """
