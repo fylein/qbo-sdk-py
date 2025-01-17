@@ -126,24 +126,24 @@ class ApiBase:
             except requests.exceptions.HTTPError as err:
                 logger.info('Response for get request for url: %s, %s', url, err.response.text)
                 if err.response.status_code == 400:
-                    raise WrongParamsError('Some of the parameters are wrong', err.response.text)   # noqa: W0707
+                    raise WrongParamsError('Some of the parameters are wrong', err.response.text) from err
 
                 if err.response.status_code == 401:
-                    raise InvalidTokenError('Invalid token, try to refresh it', err.response.text)  # noqa: W0707
+                    raise InvalidTokenError('Invalid token, try to refresh it', err.response.text) from err
 
                 if err.response.status_code == 403:
-                    raise NoPrivilegeError('Forbidden, the user has insufficient privilege', err.response.text) # noqa: W0707
+                    raise NoPrivilegeError('Forbidden, the user has insufficient privilege', err.response.text) from err
 
                 if err.response.status_code == 404:
-                    raise NotFoundItemError('Not found item with ID', err.response.text)    # noqa: W0707
+                    raise NotFoundItemError('Not found item with ID', err.response.text) from err
 
                 if err.response.status_code == 498:
-                    raise ExpiredTokenError('Expired token, try to refresh it', err.responseesponse.text)   # noqa: W0707
+                    raise ExpiredTokenError('Expired token, try to refresh it', err.response.text) from err
 
                 if err.response.status_code == 500:
-                    raise InternalServerError('Internal server error', err.response.text)   # noqa: W0707
+                    raise InternalServerError('Internal server error', err.response.text) from err
 
-                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text)    # noqa: W0707
+                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text) from err
 
     def _query(self, url: str) -> List[Dict]:
         """
