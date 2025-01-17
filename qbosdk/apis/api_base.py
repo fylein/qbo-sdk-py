@@ -118,32 +118,32 @@ class ApiBase:
                     break
 
                 logger.debug('Response for get request for url: %s, %s', url, response.text)
-                
+
                 yield query_response[object_type]
 
                 start_position += 1000
-            
+
             except requests.exceptions.HTTPError as err:
                 logger.info('Response for get request for url: %s, %s', url, err.response.text)
                 if err.response.status_code == 400:
-                    raise WrongParamsError('Some of the parameters are wrong', err.response.text)
+                    raise WrongParamsError('Some of the parameters are wrong', err.response.text)   # noqa: W0707
 
                 if err.response.status_code == 401:
-                    raise InvalidTokenError('Invalid token, try to refresh it', err.response.text)
+                    raise InvalidTokenError('Invalid token, try to refresh it', err.response.text)  # noqa: W0707
 
                 if err.response.status_code == 403:
-                    raise NoPrivilegeError('Forbidden, the user has insufficient privilege', err.response.text)
+                    raise NoPrivilegeError('Forbidden, the user has insufficient privilege', err.response.text) # noqa: W0707
 
                 if err.response.status_code == 404:
-                    raise NotFoundItemError('Not found item with ID', err.response.text)
+                    raise NotFoundItemError('Not found item with ID', err.response.text)    # noqa: W0707
 
                 if err.response.status_code == 498:
-                    raise ExpiredTokenError('Expired token, try to refresh it', err.responseesponse.text)
+                    raise ExpiredTokenError('Expired token, try to refresh it', err.responseesponse.text)   # noqa: W0707
 
                 if err.response.status_code == 500:
-                    raise InternalServerError('Internal server error', err.response.text)
+                    raise InternalServerError('Internal server error', err.response.text)   # noqa: W0707
 
-                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text)
+                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text)    # noqa: W0707
 
     def _query(self, url: str) -> List[Dict]:
         """
@@ -258,7 +258,7 @@ class ApiBase:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
             return result
-    
+
         logger.debug('Payload for post request: %s', data)
         logger.info('Response for post request: %s', response.text)
 
