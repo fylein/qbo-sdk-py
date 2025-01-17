@@ -143,7 +143,8 @@ class ApiBase:
                 if err.response.status_code == 500:
                     raise InternalServerError('Internal server error', err.response.text) from err
 
-                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), err.response.text) from err
+                raise QuickbooksOnlineSDKError('Error: {0}'.format(err.response.status_code), 
+                                               err.response.text) from err
 
     def _query(self, url: str) -> List[Dict]:
         """
