@@ -11,7 +11,7 @@ class Bills(ApiBase):
     GET_BILLS = '/query?query=select * from Bill STARTPOSITION {0} MAXRESULTS 1000'
     POST_BILL = '/bill?minorversion=38'
     DELETE_BILL = '/bill?operation=delete'
-    GET_BILL_BY_ID = '/bill/{0}'
+    GET_BILL_BY_ID = '/query?query=select * from Bill where Id = \'{0}\''
 
     def get(self):
         """
@@ -53,4 +53,4 @@ class Bills(ApiBase):
         :param bill_id: Bill Id
         :return: Dict Response
         """
-        return self._get_request('Bill', Bills.GET_BILL_BY_ID.format(bill_id))
+        return self._query(self.GET_BILL_BY_ID.format(bill_id))
