@@ -36,12 +36,13 @@ class ExchangeRates(ApiBase):
         ExchangeRates.GET_EXCHANGE_RATES = ExchangeRates.GET_EXCHANGE_RATES.format(as_of_date, '{0}')
         return self._query_get_all_generator('ExchangeRate', ExchangeRates.GET_EXCHANGE_RATES)
 
-    def get_by_source(self, source_currency_code: str):
+    def get_by_source(self, source_currency_code: str, as_of_date: str = None):
         """
         Get all the exchange rates
         :param as_of_date: date to get rates for (1 day prior if left empty)
         :return: List of Dicts for exchange rates
         """
-        as_of_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        if not as_of_date:
+            as_of_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
         return self._get_request(
             'ExchangeRate', self.GET_EXCHANGE_RATES_BY_SOURCE.format(source_currency_code, as_of_date))
