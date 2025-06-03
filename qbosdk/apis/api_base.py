@@ -18,6 +18,7 @@ class ApiBase:
     def __init__(self):
         self.__access_token = None
         self.__server_url = None
+        self.__minor_version = None
 
     def change_access_token(self, access_token):
         """
@@ -34,6 +35,22 @@ class ApiBase:
         :return: None
         """
         self.__server_url = server_url
+
+    def set_minor_version(self, minor_version: str):
+        """
+        Set the minor version to be appended to every request.
+        :param minor_version: minor version string or int
+        """
+        self.__minor_version = str(minor_version) if minor_version is not None else None
+
+    def _append_minorversion(self, url: str) -> str:
+        """
+        If a minor version is set, append ?minorversion=<mv> or &minorversion=<mv> to `url`.
+        """
+        if not self.__minor_version:
+            return url
+        sep = "&" if "?" in url else "?"
+        return f"{url}{sep}minorversion={self.__minor_version}"
 
     def _query_get_all(self, object_type: str, url: str) -> List[Dict]:
         """
@@ -53,7 +70,10 @@ class ApiBase:
             'Accept': 'application/json'
         }
 
-        response = requests.get(url=request_url.format(start_position), headers=api_headers)
+        response = requests.get(
+            url=self._append_minorversion(request_url.format(start_position)),
+            headers=api_headers
+        )
 
         if response.status_code == 200:
             logger.debug('Response for get request for url: %s, %s', url, response.text)
@@ -64,13 +84,19 @@ class ApiBase:
                 objects.extend(query_response[object_type])
                 start_position = start_position + 1000
 
-                data = json.loads(requests.get(url=request_url.format(start_position), headers=api_headers).text)
+                data = json.loads(
+                    requests.get(
+                        url=self._append_minorversion(request_url.format(start_position)),
+                        headers=api_headers
+                    ).text
+                )
 
                 query_response = data['QueryResponse']
             return objects
 
         logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
+            print(response)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -108,7 +134,10 @@ class ApiBase:
 
         while True:
             try:
-                response = requests.get(url=request_url.format(start_position), headers=api_headers)
+                response = requests.get(
+                    url=self._append_minorversion(request_url.format(start_position)),
+                    headers=api_headers
+                )
                 response.raise_for_status()
 
                 data = json.loads(response.text)
@@ -153,6 +182,8 @@ class ApiBase:
         :return: dict of the response
         """
         request_url = '{0}{1}'.format(self.__server_url, url)
+        request_url = self._append_minorversion(request_url)
+
         api_headers = {
             'Authorization': 'Bearer {0}'.format(self.__access_token),
             'Accept': 'application/json'
@@ -167,6 +198,7 @@ class ApiBase:
 
         logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
+            print(response)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -201,6 +233,8 @@ class ApiBase:
             'Accept': 'application/json'
         }
 
+        api_url = self._append_minorversion(api_url)
+
         response = requests.get(
             '{0}{1}'.format(self.__server_url, api_url),
             headers=api_headers
@@ -213,6 +247,7 @@ class ApiBase:
 
         logger.info('Response for get request for url: %s, %s', api_url, response.text)
         if response.status_code == 400:
+            print(response.text)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -248,6 +283,8 @@ class ApiBase:
             'Content-Type': 'application/json',
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
+
+        api_url = self._append_minorversion(api_url)
 
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
@@ -300,6 +337,8 @@ class ApiBase:
             'Connection': 'close',
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
+
+        api_url = self._append_minorversion(api_url)
 
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
