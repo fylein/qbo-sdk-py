@@ -20,7 +20,7 @@ class QuickbooksOnlineSDK:
 
     def __init__(self, client_id: str, client_secret: str,
                  refresh_token: str, realm_id: str, environment: str,
-                 minor_version: str = None):
+                 minor_version: str = '75'):
         """
         Initialize connection to Quickbooks Online
         :param client_id: Quickbooks online client_Id
@@ -35,7 +35,7 @@ class QuickbooksOnlineSDK:
         self.__client_secret = client_secret
         self.refresh_token = refresh_token
         self.__realm_id = realm_id
-        self._minor_version = str(minor_version) if minor_version is not None else None
+        self._minor_version = str(minor_version)
 
         if environment.lower() == 'production':
             self.__base_url = 'https://quickbooks.api.intuit.com/v3/company/{0}'.format(self.__realm_id)
