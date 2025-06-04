@@ -9,7 +9,7 @@ class JournalEntries(ApiBase):
     """Class for Categories APIs."""
 
     GET_JOURNAL_ENTRIES = '/query?query=select * from JournalEntry STARTPOSITION {0} MAXRESULTS 1000'
-    POST_JOURNAL_ENTRY = '/journalentry?minorversion=53'
+    POST_JOURNAL_ENTRY = '/journalentry'
     DELETE_JOURNAL_ENTRY = '/journalentry?operation=delete'
     GET_JOURNAL_ENTRY_BY_ID = '/journalentry/{0}'
 

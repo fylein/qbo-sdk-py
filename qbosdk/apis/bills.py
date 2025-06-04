@@ -9,7 +9,7 @@ class Bills(ApiBase):
     """Class for Bill APIs."""
 
     GET_BILLS = '/query?query=select * from Bill STARTPOSITION {0} MAXRESULTS 1000'
-    POST_BILL = '/bill?minorversion=38'
+    POST_BILL = '/bill'
     DELETE_BILL = '/bill?operation=delete'
     GET_BILL_BY_ID = '/bill/{0}'
 

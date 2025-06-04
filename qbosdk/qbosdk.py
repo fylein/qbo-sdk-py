@@ -173,7 +173,6 @@ class QuickbooksOnlineSDK:
             self.refresh_token = auth['refresh_token']
 
         elif response.status_code == 400:
-            print(response.text)
             raise WrongParamsError('Something wrong with the request body', response.text)
 
         elif response.status_code == 401:

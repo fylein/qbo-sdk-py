@@ -43,7 +43,7 @@ class ApiBase:
         """
         self.__minor_version = str(minor_version) if minor_version is not None else None
 
-    def _append_minorversion(self, url: str) -> str:
+    def _append_minor_version(self, url: str) -> str:
         """
         If a minor version is set, append ?minorversion=<mv> or &minorversion=<mv> to `url`.
         """
@@ -71,7 +71,7 @@ class ApiBase:
         }
 
         response = requests.get(
-            url=self._append_minorversion(request_url.format(start_position)),
+            url=self._append_minor_version(request_url.format(start_position)),
             headers=api_headers
         )
 
@@ -86,7 +86,7 @@ class ApiBase:
 
                 data = json.loads(
                     requests.get(
-                        url=self._append_minorversion(request_url.format(start_position)),
+                        url=self._append_minor_version(request_url.format(start_position)),
                         headers=api_headers
                     ).text
                 )
@@ -96,7 +96,6 @@ class ApiBase:
 
         logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
-            print(response)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -135,7 +134,7 @@ class ApiBase:
         while True:
             try:
                 response = requests.get(
-                    url=self._append_minorversion(request_url.format(start_position)),
+                    url=self._append_minor_version(request_url.format(start_position)),
                     headers=api_headers
                 )
                 response.raise_for_status()
@@ -182,7 +181,7 @@ class ApiBase:
         :return: dict of the response
         """
         request_url = '{0}{1}'.format(self.__server_url, url)
-        request_url = self._append_minorversion(request_url)
+        request_url = self._append_minor_version(request_url)
 
         api_headers = {
             'Authorization': 'Bearer {0}'.format(self.__access_token),
@@ -198,7 +197,6 @@ class ApiBase:
 
         logger.info('Response for get request for url: %s, %s', url, response.text)
         if response.status_code == 400:
-            print(response)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -233,7 +231,7 @@ class ApiBase:
             'Accept': 'application/json'
         }
 
-        api_url = self._append_minorversion(api_url)
+        api_url = self._append_minor_version(api_url)
 
         response = requests.get(
             '{0}{1}'.format(self.__server_url, api_url),
@@ -247,7 +245,6 @@ class ApiBase:
 
         logger.info('Response for get request for url: %s, %s', api_url, response.text)
         if response.status_code == 400:
-            print(response.text)
             raise WrongParamsError('Some of the parameters are wrong', response.text)
 
         if response.status_code == 401:
@@ -284,7 +281,7 @@ class ApiBase:
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
 
-        api_url = self._append_minorversion(api_url)
+        api_url = self._append_minor_version(api_url)
 
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),
@@ -338,7 +335,7 @@ class ApiBase:
             'Authorization': 'Bearer {0}'.format(self.__access_token)
         }
 
-        api_url = self._append_minorversion(api_url)
+        api_url = self._append_minor_version(api_url)
 
         response = requests.post(
             '{0}{1}'.format(self.__server_url, api_url),

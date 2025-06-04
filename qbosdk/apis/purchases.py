@@ -9,7 +9,7 @@ class Purchases(ApiBase):
     """Class for Categories APIs."""
 
     GET_PURCHASES = '/query?query=select * from Purchase STARTPOSITION {0} MAXRESULTS 1000'
-    POST_PURCHASE = '/purchase?minorversion=38'
+    POST_PURCHASE = '/purchase'
     DELETE_PURCHASE = '/purchase?operation=delete'
     GET_PURCHASE_BY_ID = "/query?query=select * from Purchase where Id = \'{0}\'"
 
