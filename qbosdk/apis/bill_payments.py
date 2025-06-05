@@ -9,7 +9,7 @@ class BillPayments(ApiBase):
     """Class for Bill Payments API."""
 
     GET_BILLS = '/query?query=select * from billpayment STARTPOSITION {0} MAXRESULTS 1000'
-    POST_BILL_PAYMENT = '/billpayment?minorversion=38'
+    POST_BILL_PAYMENT = '/billpayment'
     DELETE_BILL = '/billpayment?operation=delete'
 
     def get(self):

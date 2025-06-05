@@ -19,7 +19,8 @@ class QuickbooksOnlineSDK:
     TOKEN_REVOKE_URL = 'https://developer.API.intuit.com/v2/oauth2/tokens/revoke'
 
     def __init__(self, client_id: str, client_secret: str,
-                 refresh_token: str, realm_id: str, environment: str):
+                 refresh_token: str, realm_id: str, environment: str,
+                 minor_version: str = '75'):
         """
         Initialize connection to Quickbooks Online
         :param client_id: Quickbooks online client_Id
@@ -27,12 +28,14 @@ class QuickbooksOnlineSDK:
         :param refresh_token: Quickbooks online refresh_token
         :param realm_id: Quickbooks onliine realm / company id
         :param environment: production or sandbox
+        :param minor_version: optional minor version to append to every API call
         """
         # Initializing variables
         self.__client_id = client_id
         self.__client_secret = client_secret
         self.refresh_token = refresh_token
         self.__realm_id = realm_id
+        self._minor_version = str(minor_version)
 
         if environment.lower() == 'production':
             self.__base_url = 'https://quickbooks.api.intuit.com/v3/company/{0}'.format(self.__realm_id)
@@ -64,6 +67,7 @@ class QuickbooksOnlineSDK:
         self.items = Items()
 
         self.update_server_url()
+        self.update_minor_version(self._minor_version)
         self.update_access_token()
 
     def update_server_url(self):
@@ -89,6 +93,28 @@ class QuickbooksOnlineSDK:
         self.tax_codes.set_server_url(base_url)
         self.tax_rates.set_server_url(base_url)
         self.items.set_server_url(base_url)
+
+    def update_minor_version(self, minor_version: str):
+        """
+        Propagate the minor version to all API resource objects.
+        """
+        self.accounts.set_minor_version(minor_version)
+        self.departments.set_minor_version(minor_version)
+        self.classes.set_minor_version(minor_version)
+        self.vendors.set_minor_version(minor_version)
+        self.employees.set_minor_version(minor_version)
+        self.preferences.set_minor_version(minor_version)
+        self.company_info.set_minor_version(minor_version)
+        self.exchange_rates.set_minor_version(minor_version)
+        self.bills.set_minor_version(minor_version)
+        self.purchases.set_minor_version(minor_version)
+        self.journal_entries.set_minor_version(minor_version)
+        self.customers.set_minor_version(minor_version)
+        self.attachments.set_minor_version(minor_version)
+        self.bill_payments.set_minor_version(minor_version)
+        self.tax_codes.set_minor_version(minor_version)
+        self.tax_rates.set_minor_version(minor_version)
+        self.items.set_minor_version(minor_version)
 
     def update_access_token(self):
         """

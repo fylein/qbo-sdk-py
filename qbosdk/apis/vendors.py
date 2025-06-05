@@ -10,7 +10,7 @@ class Vendors(ApiBase):
     """Class for Categories APIs."""
 
     GET_VENDORS = '/query?query=select * from Vendor STARTPOSITION {0} MAXRESULTS 1000'
-    POST_VENDOR = '/vendor?minorversion=38'
+    POST_VENDOR = '/vendor'
     SEARCH_VENDOR = "/query?query=select * from Vendor where DisplayName = '{0}'"
     COUNT_VENDORS = '/query?query=select count(*) from Vendor where Active = True'
 
