@@ -22,12 +22,18 @@ class Vendors(ApiBase):
         """
         return self._query_get_all('Vendor', Vendors.GET_VENDORS)
 
-    def get_all_generator(self):
+    def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Vendors in the Organization.
 
         Returns:
             Generator with dicts in Vendors schema.
         """
+        if last_updated_time:
+            Vendors.GET_VENDORS = Vendors.GET_VENDORS.replace(
+                'from Vendor', 
+                f"from Vendor where MetaData.LastUpdatedTime > '{last_updated_time}'"
+            )
+        
         return self._query_get_all_generator('Vendor', Vendors.GET_VENDORS)
 
     def post(self, data: Dict):
