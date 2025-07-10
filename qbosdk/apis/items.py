@@ -19,12 +19,18 @@ class Items(ApiBase):
         """
         return self._query_get_all('Item', Items.GET_ITEMS)
 
-    def get_all_generator(self):
+    def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing items in the Organization.
 
         Returns:
             Generator with dicts in Items schema.
         """
+        if last_updated_time:
+            Items.GET_ITEMS = Items.GET_ITEMS.replace(
+                'from Item', 
+                f"from Item where MetaData.LastUpdatedTime > '{last_updated_time}'"
+            )
+        
         return self._query_get_all_generator('Item', Items.GET_ITEMS)
 
     def get_inactive(self, last_updated_time: None):
