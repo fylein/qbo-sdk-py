@@ -26,10 +26,10 @@ class Departments(ApiBase):
         """
         if last_updated_time:
             Departments.GET_DEPARTMENTS = Departments.GET_DEPARTMENTS.replace(
-                'from Department', 
+                'from Department',
                 f"from Department where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Department', Departments.GET_DEPARTMENTS)
 
     def count(self):

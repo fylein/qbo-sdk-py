@@ -26,10 +26,10 @@ class TaxCodes(ApiBase):
         """
         if last_updated_time:
             TaxCodes.GET_TAX_CODES = TaxCodes.GET_TAX_CODES.replace(
-                'from TaxCode', 
+                'from TaxCode',
                 f"from TaxCode where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('TaxCode', TaxCodes.GET_TAX_CODES)
 
     def count(self):

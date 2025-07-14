@@ -26,10 +26,10 @@ class Customers(ApiBase):
         """
         if last_updated_time:
             Customers.GET_CUSTOMERS = Customers.GET_CUSTOMERS.replace(
-                'from Customer', 
+                'from Customer',
                 f"from Customer where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Customer', Customers.GET_CUSTOMERS)
 
     def count(self):

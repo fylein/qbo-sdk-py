@@ -27,10 +27,10 @@ class Items(ApiBase):
         """
         if last_updated_time:
             Items.GET_ITEMS = Items.GET_ITEMS.replace(
-                'from Item', 
+                'from Item',
                 f"from Item where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Item', Items.GET_ITEMS)
 
     def get_inactive(self, last_updated_time: None):

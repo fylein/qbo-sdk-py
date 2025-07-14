@@ -29,10 +29,10 @@ class Employees(ApiBase):
         """
         if last_updated_time:
             Employees.GET_EMPLOYEES = Employees.GET_EMPLOYEES.replace(
-                'from Employee', 
+                'from Employee',
                 f"from Employee where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Employee', Employees.GET_EMPLOYEES)
 
     def post(self, data: Dict):

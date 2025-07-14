@@ -26,10 +26,10 @@ class Accounts(ApiBase):
         """
         if last_updated_time:
             Accounts.GET_ACCOUNTS = Accounts.GET_ACCOUNTS.replace(
-                'from Account', 
+                'from Account',
                 f"from Account where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Account', Accounts.GET_ACCOUNTS)
 
     def get_inactive(self, last_updated_time: None):

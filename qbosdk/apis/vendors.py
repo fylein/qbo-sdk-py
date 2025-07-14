@@ -30,10 +30,10 @@ class Vendors(ApiBase):
         """
         if last_updated_time:
             Vendors.GET_VENDORS = Vendors.GET_VENDORS.replace(
-                'from Vendor', 
+                'from Vendor',
                 f"from Vendor where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Vendor', Vendors.GET_VENDORS)
 
     def post(self, data: Dict):

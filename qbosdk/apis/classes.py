@@ -26,10 +26,10 @@ class Classes(ApiBase):
         """
         if last_updated_time:
             Classes.GET_CLASSES = Classes.GET_CLASSES.replace(
-                'from Class', 
+                'from Class',
                 f"from Class where MetaData.LastUpdatedTime > '{last_updated_time}'"
             )
-        
+
         return self._query_get_all_generator('Class', Classes.GET_CLASSES)
 
 
