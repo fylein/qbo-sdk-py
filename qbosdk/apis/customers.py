@@ -18,12 +18,18 @@ class Customers(ApiBase):
         """
         return self._query_get_all('Customer', Customers.GET_CUSTOMERS)
 
-    def get_all_generator(self):
+    def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Customers in the Organization.
 
         Returns:
             Generator with dicts in Customers schema.
         """
+        if last_updated_time:
+            Customers.GET_CUSTOMERS = Customers.GET_CUSTOMERS.replace(
+                'from Customer',
+                f"from Customer where MetaData.LastUpdatedTime > '{last_updated_time}'"
+            )
+
         return self._query_get_all_generator('Customer', Customers.GET_CUSTOMERS)
 
     def count(self):

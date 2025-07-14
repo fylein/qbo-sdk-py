@@ -18,12 +18,18 @@ class Classes(ApiBase):
         """
         return self._query_get_all('Class', Classes.GET_CLASSES)
 
-    def get_all_generator(self):
+    def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Classes in the Organization.
 
         Returns:
             Generator with dicts in Classes schema.
         """
+        if last_updated_time:
+            Classes.GET_CLASSES = Classes.GET_CLASSES.replace(
+                'from Class',
+                f"from Class where MetaData.LastUpdatedTime > '{last_updated_time}'"
+            )
+
         return self._query_get_all_generator('Class', Classes.GET_CLASSES)
 
 

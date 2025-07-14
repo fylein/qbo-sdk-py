@@ -123,6 +123,7 @@ class ApiBase:
         :return: list of objects
         """
         start_position = 1
+        max_results = 1000
 
         request_url = '{0}{1}'.format(self.__server_url, url)
 
@@ -149,7 +150,11 @@ class ApiBase:
 
                 yield query_response[object_type]
 
-                start_position += 1000
+                # If we got fewer results than max_results, we've reached the end
+                if len(query_response[object_type]) < max_results:
+                    break
+
+                start_position += max_results
 
             except requests.exceptions.HTTPError as err:
                 logger.info('Response for get request for url: %s, %s', url, err.response.text)

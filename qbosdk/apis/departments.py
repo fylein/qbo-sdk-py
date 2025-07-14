@@ -18,12 +18,18 @@ class Departments(ApiBase):
         """
         return self._query_get_all('Department', Departments.GET_DEPARTMENTS)
 
-    def get_all_generator(self):
+    def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Departments in the Organization.
 
         Returns:
             Generator with dicts in Departments schema.
         """
+        if last_updated_time:
+            Departments.GET_DEPARTMENTS = Departments.GET_DEPARTMENTS.replace(
+                'from Department',
+                f"from Department where MetaData.LastUpdatedTime > '{last_updated_time}'"
+            )
+
         return self._query_get_all_generator('Department', Departments.GET_DEPARTMENTS)
 
     def count(self):
