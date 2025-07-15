@@ -10,7 +10,7 @@ class Employees(ApiBase):
     """Class for Categories APIs."""
 
     GET_EMPLOYEES = '/query?query=select * from Employee STARTPOSITION {0} MAXRESULTS 1000'
-    POST_EMPLOYEE = '/employee?minorversion=38'
+    POST_EMPLOYEE = '/employee'
     COUNT_EMPLOYEES = '/query?query=select count(*) from Employee where Active = True'
 
     def get(self):
