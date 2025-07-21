@@ -35,10 +35,10 @@ class Classes(ApiBase):
 
     def get_inactive(self, last_updated_time: None):
         """
-        Retrieves a list of inactive accounts from the QuickBooks Online API.
+        Retrieves a list of inactive classes from the QuickBooks Online API.
 
-        :param last_updated_time: The last updated time to filter the accounts.
-        :return: A list of inactive accounts.
+        :param last_updated_time: The last updated time to filter the classes.
+        :return: A list of inactive classes.
         """
 
         QUERY = "/query?query=select * from Class where Active=false"

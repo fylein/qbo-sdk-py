@@ -34,10 +34,10 @@ class Departments(ApiBase):
     
     def get_inactive(self, last_updated_time: None):
         """
-        Retrieves a list of inactive accounts from the QuickBooks Online API.
+        Retrieves a list of inactive departments from the QuickBooks Online API.
 
-        :param last_updated_time: The last updated time to filter the accounts.
-        :return: A list of inactive accounts.
+        :param last_updated_time: The last updated time to filter the departments.
+        :return: A list of inactive departments.
         """
 
         QUERY = "/query?query=select * from Department where Active=false"
