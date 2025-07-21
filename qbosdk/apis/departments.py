@@ -31,7 +31,7 @@ class Departments(ApiBase):
             )
 
         return self._query_get_all_generator('Department', Departments.GET_DEPARTMENTS)
-    
+
     def get_inactive(self, last_updated_time: None):
         """
         Retrieves a list of inactive departments from the QuickBooks Online API.
