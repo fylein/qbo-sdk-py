@@ -31,7 +31,7 @@ class Classes(ApiBase):
             )
 
         return self._query_get_all_generator('Class', Classes.GET_CLASSES)
-    
+
 
     def get_inactive(self, last_updated_time: None):
         """
