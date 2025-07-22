@@ -34,7 +34,7 @@ class Employees(ApiBase):
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
         return self._query_get_all_generator('Employee', QUERY)
-    
+
     def get_inactive(self, last_updated_time: None):
         """
         Retrieves a list of inactive employees from the QuickBooks Online API.
