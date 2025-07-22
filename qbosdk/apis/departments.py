@@ -7,7 +7,7 @@ from .api_base import ApiBase
 class Departments(ApiBase):
     """Class for Categories APIs."""
 
-    GET_DEPARTMENTS = '/query?query=select * from Department STARTPOSITION {0} MAXRESULTS 1000'
+    GET_DEPARTMENTS = '/query?query=select * from Department'
     COUNT_DEPARTMENT = '/query?query=select count(*) from Department where Active = True'
 
     def get(self):
@@ -16,7 +16,8 @@ class Departments(ApiBase):
         Returns:
             List with dicts in Departments schema.
         """
-        return self._query_get_all('Department', Departments.GET_DEPARTMENTS)
+        QUERY = Departments.GET_DEPARTMENTS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Department', QUERY)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Departments in the Organization.
@@ -24,13 +25,12 @@ class Departments(ApiBase):
         Returns:
             Generator with dicts in Departments schema.
         """
+        QUERY = Departments.GET_DEPARTMENTS
         if last_updated_time:
-            Departments.GET_DEPARTMENTS = Departments.GET_DEPARTMENTS.replace(
-                'from Department',
-                f"from Department where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Department', Departments.GET_DEPARTMENTS)
+        return self._query_get_all_generator('Department', QUERY)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -40,7 +40,7 @@ class Departments(ApiBase):
         :return: A list of inactive departments.
         """
 
-        QUERY = "/query?query=select * from Department where Active=false"
+        QUERY = Departments.GET_DEPARTMENTS + " where Active=false"
         if last_updated_time:
             QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"

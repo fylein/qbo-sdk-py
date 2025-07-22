@@ -9,7 +9,7 @@ from .api_base import ApiBase
 class Employees(ApiBase):
     """Class for Categories APIs."""
 
-    GET_EMPLOYEES = '/query?query=select * from Employee STARTPOSITION {0} MAXRESULTS 1000'
+    GET_EMPLOYEES = '/query?query=select * from Employee'
     POST_EMPLOYEE = '/employee'
     COUNT_EMPLOYEES = '/query?query=select count(*) from Employee where Active = True'
 
@@ -19,7 +19,8 @@ class Employees(ApiBase):
         Returns:
             List with dicts in Employees schema.
         """
-        return self._query_get_all('Employee', Employees.GET_EMPLOYEES)
+        QUERY = Employees.GET_EMPLOYEES + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Employee', QUERY)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Employees in the Organization.
@@ -27,13 +28,25 @@ class Employees(ApiBase):
         Returns:
             Generator with dicts in Employees schema.
         """
+        QUERY = Employees.GET_EMPLOYEES
         if last_updated_time:
-            Employees.GET_EMPLOYEES = Employees.GET_EMPLOYEES.replace(
-                'from Employee',
-                f"from Employee where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Employee', Employees.GET_EMPLOYEES)
+        return self._query_get_all_generator('Employee', QUERY)
+    
+    def get_inactive(self, last_updated_time: None):
+        """
+        Retrieves a list of inactive employees from the QuickBooks Online API.
+
+        :param last_updated_time: The last updated time to filter the employees.
+        :return: A list of inactive employees.
+        """
+        QUERY = Employees.GET_EMPLOYEES + " where Active=false"
+        if last_updated_time:
+            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all_generator('Employee', QUERY)
 
     def post(self, data: Dict):
         """

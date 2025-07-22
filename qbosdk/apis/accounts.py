@@ -7,7 +7,7 @@ from .api_base import ApiBase
 class Accounts(ApiBase):
     """Class for Categories APIs."""
 
-    GET_ACCOUNTS = '/query?query=select * from Account STARTPOSITION {0} MAXRESULTS 1000'
+    GET_ACCOUNTS = '/query?query=select * from Account'
     ACCOUNT_COUNT = '/query?query=select count(*) from Account where Active = True'
 
     def get(self):
@@ -16,7 +16,8 @@ class Accounts(ApiBase):
         Returns:
             List with dicts in Accounts schema.
         """
-        return self._query_get_all('Account', Accounts.GET_ACCOUNTS)
+        QUERY = Accounts.GET_ACCOUNTS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Account', QUERY)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a generator of all the existing Accounts in the Organization.
@@ -24,13 +25,12 @@ class Accounts(ApiBase):
         Returns:
             Generator with dicts in Accounts schema.
         """
+        QUERY = Accounts.GET_ACCOUNTS
         if last_updated_time:
-            Accounts.GET_ACCOUNTS = Accounts.GET_ACCOUNTS.replace(
-                'from Account',
-                f"from Account where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Account', Accounts.GET_ACCOUNTS)
+        return self._query_get_all_generator('Account', QUERY)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -40,7 +40,7 @@ class Accounts(ApiBase):
         :return: A list of inactive accounts.
         """
 
-        QUERY = "/query?query=select * from Account where Active=false"
+        QUERY = Accounts.GET_ACCOUNTS + " where Active=false"
         if last_updated_time:
             QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"

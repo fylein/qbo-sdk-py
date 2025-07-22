@@ -7,7 +7,7 @@ from .api_base import ApiBase
 class Classes(ApiBase):
     """Class for Categories APIs."""
 
-    GET_CLASSES = '/query?query=select * from Class STARTPOSITION {0} MAXRESULTS 1000'
+    GET_CLASSES = '/query?query=select * from Class'
     COUNT_CLASSES = '/query?query=select count(*) from Class where Active = True'
 
     def get(self):
@@ -16,7 +16,8 @@ class Classes(ApiBase):
         Returns:
             List with dicts in Classes schema.
         """
-        return self._query_get_all('Class', Classes.GET_CLASSES)
+        QUERY = Classes.GET_CLASSES + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Class', QUERY)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Classes in the Organization.
@@ -24,13 +25,12 @@ class Classes(ApiBase):
         Returns:
             Generator with dicts in Classes schema.
         """
+        QUERY = Classes.GET_CLASSES
         if last_updated_time:
-            Classes.GET_CLASSES = Classes.GET_CLASSES.replace(
-                'from Class',
-                f"from Class where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Class', Classes.GET_CLASSES)
+        return self._query_get_all_generator('Class', QUERY)
 
 
     def get_inactive(self, last_updated_time: None):
@@ -41,7 +41,7 @@ class Classes(ApiBase):
         :return: A list of inactive classes.
         """
 
-        QUERY = "/query?query=select * from Class where Active=false"
+        QUERY = Classes.GET_CLASSES + " where Active=false"
         if last_updated_time:
             QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
         QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
