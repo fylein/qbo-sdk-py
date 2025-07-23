@@ -16,8 +16,8 @@ class Customers(ApiBase):
         Returns:
             List with dicts in Customers schema.
         """
-        QUERY = Customers.GET_CUSTOMERS + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Customer', QUERY)
+        query = Customers.GET_CUSTOMERS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Customer', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Customers in the Organization.
@@ -25,12 +25,12 @@ class Customers(ApiBase):
         Returns:
             Generator with dicts in Customers schema.
         """
-        QUERY = Customers.GET_CUSTOMERS
+        query = Customers.GET_CUSTOMERS
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Customer', QUERY)
+        return self._query_get_all_generator('Customer', query)
 
     def count(self):
         """Get count of Customers in the Organization.
@@ -48,9 +48,9 @@ class Customers(ApiBase):
         :return: A list of inactive customers.
         """
 
-        QUERY = Customers.GET_CUSTOMERS + " where Active=false"
+        query = Customers.GET_CUSTOMERS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Customer', QUERY)
+        return self._query_get_all_generator('Customer', query)

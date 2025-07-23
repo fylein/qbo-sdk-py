@@ -19,8 +19,8 @@ class Employees(ApiBase):
         Returns:
             List with dicts in Employees schema.
         """
-        QUERY = Employees.GET_EMPLOYEES + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Employee', QUERY)
+        query = Employees.GET_EMPLOYEES + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Employee', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Employees in the Organization.
@@ -28,12 +28,12 @@ class Employees(ApiBase):
         Returns:
             Generator with dicts in Employees schema.
         """
-        QUERY = Employees.GET_EMPLOYEES
+        query = Employees.GET_EMPLOYEES
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Employee', QUERY)
+        return self._query_get_all_generator('Employee', query)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -42,11 +42,11 @@ class Employees(ApiBase):
         :param last_updated_time: The last updated time to filter the employees.
         :return: A list of inactive employees.
         """
-        QUERY = Employees.GET_EMPLOYEES + " where Active=false"
+        query = Employees.GET_EMPLOYEES + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all_generator('Employee', QUERY)
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all_generator('Employee', query)
 
     def post(self, data: Dict):
         """

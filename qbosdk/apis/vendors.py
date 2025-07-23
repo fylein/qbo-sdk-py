@@ -20,8 +20,8 @@ class Vendors(ApiBase):
         Returns:
             List with dicts in Vendors schema.
         """
-        QUERY = Vendors.GET_VENDORS + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Vendor', QUERY)
+        query = Vendors.GET_VENDORS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Vendor', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Vendors in the Organization.
@@ -29,12 +29,12 @@ class Vendors(ApiBase):
         Returns:
             Generator with dicts in Vendors schema.
         """
-        QUERY = Vendors.GET_VENDORS
+        query = Vendors.GET_VENDORS
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Vendor', QUERY)
+        return self._query_get_all_generator('Vendor', query)
 
     def post(self, data: Dict):
         """
@@ -62,12 +62,12 @@ class Vendors(ApiBase):
         :return: A list of inactive vendors.
         """
 
-        QUERY = Vendors.GET_VENDORS + " where Active=false"
+        query = Vendors.GET_VENDORS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Vendor', QUERY)
+        return self._query_get_all_generator('Vendor', query)
 
     def count(self):
         """Get count of Vendors in the Organization.

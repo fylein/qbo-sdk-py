@@ -16,8 +16,8 @@ class Accounts(ApiBase):
         Returns:
             List with dicts in Accounts schema.
         """
-        QUERY = Accounts.GET_ACCOUNTS + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Account', QUERY)
+        query = Accounts.GET_ACCOUNTS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Account', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a generator of all the existing Accounts in the Organization.
@@ -25,12 +25,12 @@ class Accounts(ApiBase):
         Returns:
             Generator with dicts in Accounts schema.
         """
-        QUERY = Accounts.GET_ACCOUNTS
+        query = Accounts.GET_ACCOUNTS
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Account', QUERY)
+        return self._query_get_all_generator('Account', query)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -40,12 +40,12 @@ class Accounts(ApiBase):
         :return: A list of inactive accounts.
         """
 
-        QUERY = Accounts.GET_ACCOUNTS + " where Active=false"
+        query = Accounts.GET_ACCOUNTS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Account', QUERY)
+        return self._query_get_all_generator('Account', query)
 
     def count(self):
         """Get count of Accounts in the Organization.

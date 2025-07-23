@@ -16,8 +16,8 @@ class Departments(ApiBase):
         Returns:
             List with dicts in Departments schema.
         """
-        QUERY = Departments.GET_DEPARTMENTS + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Department', QUERY)
+        query = Departments.GET_DEPARTMENTS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Department', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Departments in the Organization.
@@ -25,12 +25,12 @@ class Departments(ApiBase):
         Returns:
             Generator with dicts in Departments schema.
         """
-        QUERY = Departments.GET_DEPARTMENTS
+        query = Departments.GET_DEPARTMENTS
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Department', QUERY)
+        return self._query_get_all_generator('Department', query)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -40,12 +40,12 @@ class Departments(ApiBase):
         :return: A list of inactive departments.
         """
 
-        QUERY = Departments.GET_DEPARTMENTS + " where Active=false"
+        query = Departments.GET_DEPARTMENTS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Department', QUERY)
+        return self._query_get_all_generator('Department', query)
 
     def count(self):
         """Get count of Departments in the Organization.

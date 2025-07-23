@@ -16,8 +16,8 @@ class TaxCodes(ApiBase):
         Returns:
             Dict in TaxCode schema.
         """
-        QUERY = TaxCodes.GET_TAX_CODES + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('TaxCode', QUERY)
+        query = TaxCodes.GET_TAX_CODES + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('TaxCode', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Tax Code in the Organization.
@@ -25,12 +25,12 @@ class TaxCodes(ApiBase):
         Returns:
             Generator with dicts in TaxCode schema.
         """
-        QUERY = TaxCodes.GET_TAX_CODES
+        query = TaxCodes.GET_TAX_CODES
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('TaxCode', QUERY)
+        return self._query_get_all_generator('TaxCode', query)
 
     def get_inactive(self, last_updated_time: None):
 
@@ -40,11 +40,11 @@ class TaxCodes(ApiBase):
         :param last_updated_time: The last updated time to filter the tax codes.
         :return: A list of inactive tax codes.
         """
-        QUERY = TaxCodes.GET_TAX_CODES + " where Active=false"
+        query = TaxCodes.GET_TAX_CODES + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all_generator('TaxCode', QUERY)
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all_generator('TaxCode', query)
 
     def count(self):
         """Get count of Tax codes in the Organization.

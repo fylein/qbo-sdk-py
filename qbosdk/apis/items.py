@@ -17,8 +17,8 @@ class Items(ApiBase):
         Returns:
             List with dicts in Items schema.
         """
-        QUERY = Items.GET_ITEMS + " STARTPOSITION {0} MAXRESULTS 1000"
-        return self._query_get_all('Item', QUERY)
+        query = Items.GET_ITEMS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Item', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing items in the Organization.
@@ -26,12 +26,12 @@ class Items(ApiBase):
         Returns:
             Generator with dicts in Items schema.
         """
-        QUERY = Items.GET_ITEMS
+        query = Items.GET_ITEMS
         if last_updated_time:
-            QUERY += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Item', QUERY)
+        return self._query_get_all_generator('Item', query)
 
     def get_inactive(self, last_updated_time: None):
         """
@@ -41,12 +41,12 @@ class Items(ApiBase):
         :return: A list of inactive items.
         """
 
-        QUERY = Items.GET_ITEMS + " where Active=false"
+        query = Items.GET_ITEMS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Item', QUERY)
+        return self._query_get_all_generator('Item', query)
 
     def count(self):
         """Get count of Items in the Organization.
