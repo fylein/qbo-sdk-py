@@ -9,7 +9,7 @@ from .api_base import ApiBase
 class Vendors(ApiBase):
     """Class for Categories APIs."""
 
-    GET_VENDORS = '/query?query=select * from Vendor STARTPOSITION {0} MAXRESULTS 1000'
+    GET_VENDORS = '/query?query=select * from Vendor'
     POST_VENDOR = '/vendor'
     SEARCH_VENDOR = "/query?query=select * from Vendor where DisplayName = '{0}'"
     COUNT_VENDORS = '/query?query=select count(*) from Vendor where Active = True'
@@ -20,7 +20,8 @@ class Vendors(ApiBase):
         Returns:
             List with dicts in Vendors schema.
         """
-        return self._query_get_all('Vendor', Vendors.GET_VENDORS)
+        query = Vendors.GET_VENDORS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Vendor', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Vendors in the Organization.
@@ -28,13 +29,12 @@ class Vendors(ApiBase):
         Returns:
             Generator with dicts in Vendors schema.
         """
+        query = Vendors.GET_VENDORS
         if last_updated_time:
-            Vendors.GET_VENDORS = Vendors.GET_VENDORS.replace(
-                'from Vendor',
-                f"from Vendor where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Vendor', Vendors.GET_VENDORS)
+        return self._query_get_all_generator('Vendor', query)
 
     def post(self, data: Dict):
         """
@@ -62,12 +62,12 @@ class Vendors(ApiBase):
         :return: A list of inactive vendors.
         """
 
-        QUERY = "/query?query=select * from Vendor where Active=false"
+        query = Vendors.GET_VENDORS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Vendor', QUERY)
+        return self._query_get_all_generator('Vendor', query)
 
     def count(self):
         """Get count of Vendors in the Organization.

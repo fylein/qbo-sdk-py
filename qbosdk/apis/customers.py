@@ -7,7 +7,7 @@ from .api_base import ApiBase
 class Customers(ApiBase):
     """Class for Customer APIs."""
 
-    GET_CUSTOMERS = '/query?query=select * from Customer STARTPOSITION {0} MAXRESULTS 1000'
+    GET_CUSTOMERS = '/query?query=select * from Customer'
     COUNT_CUSTOMERS = '/query?query=select count(*) from Customer where Active = True'
 
     def get(self):
@@ -16,7 +16,8 @@ class Customers(ApiBase):
         Returns:
             List with dicts in Customers schema.
         """
-        return self._query_get_all('Customer', Customers.GET_CUSTOMERS)
+        query = Customers.GET_CUSTOMERS + " STARTPOSITION {0} MAXRESULTS 1000"
+        return self._query_get_all('Customer', query)
 
     def get_all_generator(self, last_updated_time = None):
         """Get a list of the existing Customers in the Organization.
@@ -24,13 +25,12 @@ class Customers(ApiBase):
         Returns:
             Generator with dicts in Customers schema.
         """
+        query = Customers.GET_CUSTOMERS
         if last_updated_time:
-            Customers.GET_CUSTOMERS = Customers.GET_CUSTOMERS.replace(
-                'from Customer',
-                f"from Customer where MetaData.LastUpdatedTime > '{last_updated_time}'"
-            )
+            query += f" where Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Customer', Customers.GET_CUSTOMERS)
+        return self._query_get_all_generator('Customer', query)
 
     def count(self):
         """Get count of Customers in the Organization.
@@ -48,9 +48,9 @@ class Customers(ApiBase):
         :return: A list of inactive customers.
         """
 
-        QUERY = "/query?query=select * from Customer where Active=false"
+        query = Customers.GET_CUSTOMERS + " where Active=false"
         if last_updated_time:
-            QUERY += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
-        QUERY += " STARTPOSITION {0} MAXRESULTS 1000"
+            query += f" and Metadata.LastUpdatedTime >= '{last_updated_time}'"
+        query += " STARTPOSITION {0} MAXRESULTS 1000"
 
-        return self._query_get_all_generator('Customer', QUERY)
+        return self._query_get_all_generator('Customer', query)
