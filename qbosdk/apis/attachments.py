@@ -120,3 +120,14 @@ class Attachments(ApiBase):
         }
 
         return content_types.get(extension.lower())
+
+
+    def get_by_ref_id(self, ref_id: str, ref_type: str):
+        """
+        Get Attachables by reference ID and type
+        :param ref_id: ID of the referenced object
+        :param ref_type: Type of the referenced object (e.g., 'purchase', 'bill', etc.)
+        :return: List of Dicts in attachable schema
+        """
+        query = f"select Id from attachable where AttachableRef.EntityRef.Type = '{ref_type.lower()}' and AttachableRef.EntityRef.value = '{ref_id}' STARTPOSITION 0 MAXRESULTS 2"
+        return self._query(f'/query?query={query}')
