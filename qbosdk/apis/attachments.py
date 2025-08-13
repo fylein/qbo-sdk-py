@@ -3,7 +3,7 @@ Quickbooks Online attachables
 """
 import json
 import textwrap
-from typing import Dict
+from typing import Dict, Optional
 
 from .api_base import ApiBase
 
@@ -91,7 +91,7 @@ class Attachments(ApiBase):
         return {}
 
     @staticmethod
-    def __get_content_type(file_name: str) -> str or None:
+    def __get_content_type(file_name: str) -> Optional[str]:
         """
         Gets content type of supported file types
         :param file_name: name of the file
@@ -129,5 +129,8 @@ class Attachments(ApiBase):
         :param ref_type: Type of the referenced object (e.g., 'purchase', 'bill', etc.)
         :return: List of Dicts in attachable schema
         """
-        query = f"select Id from attachable where AttachableRef.EntityRef.Type = '{ref_type.lower()}' and AttachableRef.EntityRef.value = '{ref_id}' STARTPOSITION 0 MAXRESULTS 2"
+        query = (
+            f"select Id from attachable where AttachableRef.EntityRef.Type = '{ref_type}' "
+            f"and AttachableRef.EntityRef.value = '{ref_id}' STARTPOSITION 0 MAXRESULTS 2"
+        )
         return self._query(f'/query?query={query}')
