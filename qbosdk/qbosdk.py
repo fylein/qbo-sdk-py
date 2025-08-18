@@ -4,7 +4,7 @@ Quickbooks online Python SDK
 import json
 import base64
 import requests
-from future.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from .exceptions import NotFoundClientError, QuickbooksOnlineSDKError, UnauthorizedClientError,\
     WrongParamsError, InternalServerError, InvalidTokenError
