@@ -351,8 +351,12 @@ class ApiBase:
         if response.status_code == 200:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
-            return result['AttachableResponse'][0]['Attachable']
 
+            if 'AttachableResponse' in result and result['AttachableResponse'] and len(result['AttachableResponse']) > 0 and 'Attachable' in result['AttachableResponse'][0]:
+                return result['AttachableResponse'][0]['Attachable']
+            else:
+                logger.info('Received unexpected attachment post response: %s', response.text)
+                raise WrongParamsError('Received unexpected attachment post response', response.text)
 
         logger.debug('Payload for post request: %s', data)
         logger.info('Response for post request: %s', response.text)
