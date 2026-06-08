@@ -65,7 +65,8 @@ class Attachments(ApiBase):
         content_type = self.__get_content_type(file_name)
 
         body = {
-            'Content-Type': content_type
+            'FileName': file_name,
+            'ContentType': content_type
         }
 
         if content_type:
@@ -74,6 +75,7 @@ class Attachments(ApiBase):
                 --%s
                 Content-Disposition: form-data; name="file_metadata_01";
                 Content-Type: application/json
+
                 %s
                 --%s
                 Content-Disposition: form-data; name="file_content_01"; filename="%s"
