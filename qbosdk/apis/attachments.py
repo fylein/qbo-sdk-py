@@ -65,7 +65,7 @@ class Attachments(ApiBase):
         content_type = self.__get_content_type(file_name)
 
         body = {
-            'ContentType': content_type
+            'Content-Type': content_type
         }
 
         if content_type:
