@@ -74,6 +74,7 @@ class Attachments(ApiBase):
                 --%s
                 Content-Disposition: form-data; name="file_metadata_01";
                 Content-Type: application/json
+
                 %s
                 --%s
                 Content-Disposition: form-data; name="file_content_01"; filename="%s"
