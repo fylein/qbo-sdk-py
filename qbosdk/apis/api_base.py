@@ -352,7 +352,12 @@ class ApiBase:
             logger.debug('Response for post request: %s', response.text)
             result = json.loads(response.text)
 
-            if 'AttachableResponse' in result and result['AttachableResponse'] and len(result['AttachableResponse']) > 0 and 'Attachable' in result['AttachableResponse'][0]:
+            if (
+                'AttachableResponse' in result
+                and result['AttachableResponse']
+                and len(result['AttachableResponse']) > 0
+                and 'Attachable' in result['AttachableResponse'][0]
+            ):
                 return result['AttachableResponse'][0]['Attachable']
             else:
                 logger.info('Received unexpected attachment post response: %s', response.text)
