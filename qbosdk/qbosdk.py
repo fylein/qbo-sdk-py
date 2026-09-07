@@ -173,7 +173,13 @@ class QuickbooksOnlineSDK:
             self.refresh_token = auth['refresh_token']
 
         elif response.status_code == 400:
-            raise WrongParamsError('Something wrong with the request body', response.text)
+            exception = json.loads(response.text)
+            if 'Fault' not in exception:
+                if 'error' in exception and exception['error'] == 'invalid_grant':
+                    # {"error":"invalid_grant","error_description":"Incorrect or invalid refresh token"}
+                    raise InvalidTokenError('Error: {0}'.format(response.status_code), response.text)
+
+            raise WrongParamsError('Something wrong with the request body: %s', response.text)
 
         elif response.status_code == 401:
             raise UnauthorizedClientError('Wrong client secret or/and refresh token', response.text)
