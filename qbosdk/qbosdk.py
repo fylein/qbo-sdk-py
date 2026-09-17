@@ -78,8 +78,7 @@ class QuickbooksOnlineSDK:
         self.update_server_url()
         self.update_minor_version(self._minor_version)
 
-        if not self.__access_token:
-            self.update_access_token()
+        self.update_access_token()
 
     @property
     def access_token(self):
@@ -147,7 +146,9 @@ class QuickbooksOnlineSDK:
         """
         Update the access token and change it in all API objects.
         """
-        self.__get_access_token()
+        if not self.__access_token:
+            self.__get_access_token()
+
         access_token = self.__access_token
 
         self.accounts.change_access_token(access_token)
