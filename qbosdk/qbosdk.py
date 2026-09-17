@@ -18,9 +18,16 @@ class QuickbooksOnlineSDK:
     TOKEN_URL = 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer'
     TOKEN_REVOKE_URL = 'https://developer.API.intuit.com/v2/oauth2/tokens/revoke'
 
-    def __init__(self, client_id: str, client_secret: str,
-                 refresh_token: str, realm_id: str, environment: str,
-                 minor_version: str = '75'):
+    def __init__(
+        self,
+        client_id: str,
+        client_secret: str,
+        refresh_token: str,
+        realm_id: str,
+        environment: str,
+        minor_version: str = '75',
+        access_token: str = None
+    ):
         """
         Initialize connection to Quickbooks Online
         :param client_id: Quickbooks online client_Id
@@ -29,6 +36,7 @@ class QuickbooksOnlineSDK:
         :param realm_id: Quickbooks onliine realm / company id
         :param environment: production or sandbox
         :param minor_version: optional minor version to append to every API call
+        :param access_token: optional access token if already available
         """
         # Initializing variables
         self.__client_id = client_id
@@ -46,7 +54,8 @@ class QuickbooksOnlineSDK:
         else:
             raise ValueError('environment can only be prodcution / sandbox')
 
-        self.__access_token = None
+        self.__access_token = access_token
+        self.__access_token_expires_in = None
 
         self.accounts = Accounts()
         self.departments = Departments()
@@ -68,7 +77,25 @@ class QuickbooksOnlineSDK:
 
         self.update_server_url()
         self.update_minor_version(self._minor_version)
-        self.update_access_token()
+
+        if not self.__access_token:
+            self.update_access_token()
+
+    @property
+    def access_token(self):
+        """
+        Get the current access token
+        :return: current access token
+        """
+        return self.__access_token
+
+    @property
+    def access_token_expires_in(self) -> int:
+        """
+        Get the access token expires in
+        :return: access token expires in (seconds)
+        """
+        return self.__access_token_expires_in
 
     def update_server_url(self):
         """
@@ -171,6 +198,7 @@ class QuickbooksOnlineSDK:
             auth = json.loads(response.text)
             self.__access_token = auth['access_token']
             self.refresh_token = auth['refresh_token']
+            self.__access_token_expires_in = auth['expires_in']
 
         elif response.status_code == 400:
             exception = json.loads(response.text)
