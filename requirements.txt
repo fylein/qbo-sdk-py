@@ -1,2 +1,2 @@
 requests>=2.25.0
-pylint==2.7.4
+pylint==4.0.9
